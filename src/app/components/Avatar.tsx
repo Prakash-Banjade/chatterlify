@@ -12,11 +12,15 @@ type Props = {
 
 export default function Avatar({ user, activeStatus, className = '' }: Props) {
 
+    if (!user) return (
+        <Image alt="avatar" src="/images/avatarPlaceholder.webp" height={42} width={42} className="w-auto" />
+    )
+
     const { image, name } = user;
 
     const words = name?.split(' ');
     const initials = words?.map(word => word.charAt(0).toUpperCase());
-    const abbreviation = initials?.join('') || <Image alt={name || 'Avatar'} src="/images/avatarPlaceholder.webp" height={42} width={42} />;
+    const abbreviation = initials?.join('');
 
     return (
         <div className="relative">
