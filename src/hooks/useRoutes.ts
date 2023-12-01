@@ -16,7 +16,7 @@ export default function useRoutes() {
     const routes = useMemo(() => [
         {
             label: 'Chat',
-            href: '/conversation',
+            href: '/conversations',
             icon: ChatBubbleIcon,
             active: pathname === '/conversation' || !!conversationId
         },
