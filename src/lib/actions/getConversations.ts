@@ -1,17 +1,17 @@
-import prisma from '../prismadb'
-import getCurrentUser from './getCurrentUser'
+import prisma from "@/lib/prismadb";
+import getCurrentUser from "./getCurrentUser";
 
-export default async function getConversations() {
+const getConversations = async () => {
     const currentUser = await getCurrentUser();
 
-    if (!currentUser?.id) { // a little different approach
-        throw new Error('Not authorized')
+    if (!currentUser?.id) {
+        return [];
     }
 
     try {
         const conversations = await prisma.conversation.findMany({
             orderBy: {
-                lastMessageAt: 'desc'
+                lastMessageAt: 'desc',
             },
             where: {
                 userIds: {
@@ -25,13 +25,14 @@ export default async function getConversations() {
                         sender: true,
                         seen: true,
                     }
-                }
+                },
             }
-        })
+        });
 
         return conversations;
-    } catch (e) {
-        if (e instanceof Error) throw new Error(e.message)
-        throw new Error('Something went wrong')
+    } catch (error: any) {
+        return [];
     }
-}
+};
+
+export default getConversations;

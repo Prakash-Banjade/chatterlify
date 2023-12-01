@@ -39,7 +39,10 @@ export default function ConversationBox({ data, selected }: Props) {
     const hasSeen = useMemo(() => { // different approach
         if (!lastMessage) return false;
         if (!userEmail) return false;
-        return !!lastMessage.seen.find(user => user.id === userEmail);
+
+        const seenArray = lastMessage.seen || []
+        
+        return seenArray.filter(user => user.email === userEmail).length !== 0;
     }, [userEmail, lastMessage])
 
     const lastMessageText = useMemo(() => {

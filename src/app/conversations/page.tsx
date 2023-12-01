@@ -12,6 +12,7 @@ export default function Home() {
             'lg:pl-80 h-full lg:block',
             isOpen ? 'block' : 'hidden'
         )}>
+            <EmptyState />
         </div>
     )
 }
