@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { FullMessage } from "../../../../../types"
 import useConversation from "@/hooks/useConversation";
 import MessageBox from "./MessageBox";
@@ -15,6 +15,17 @@ export default function Body({ initialMessages }: Props) {
     const bottomRef = useRef<HTMLDivElement>(null);
 
     const { conversationId } = useConversation();
+
+    useEffect(() => {
+        fetch(`/api/conversations/${conversationId}/seen`, {
+            method: 'POST'
+        }).catch((e) => console.log(e))
+
+        if (bottomRef?.current) {
+            bottomRef.current.scrollIntoView({ behavior: 'smooth' })
+        }
+        
+    }, [conversationId])
 
     return (
         <div className="flex-1 overflow-y-auto">

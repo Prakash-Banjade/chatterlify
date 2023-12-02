@@ -36,12 +36,16 @@ export default function ConversationBox({ data, selected }: Props) {
         return session?.data?.user?.email;
     }, [session?.data?.user?.email])
 
-    const hasSeen = useMemo(() => { // different approach
+    const lastMessageSenderEmail = useMemo(() => {
+        return lastMessage?.sender?.email
+    }, [lastMessage])
+
+    const hasSeen = useMemo(() => {
         if (!lastMessage) return false;
         if (!userEmail) return false;
 
         const seenArray = lastMessage.seen || []
-        
+
         return seenArray.filter(user => user.email === userEmail).length !== 0;
     }, [userEmail, lastMessage])
 
@@ -68,7 +72,7 @@ export default function ConversationBox({ data, selected }: Props) {
                     }
                 </section>
                 <section>
-                    <p className={clsx("text-left text-sm truncate", hasSeen && 'text-muted-foreground')}>{lastMessageText}</p>
+                    <p className={clsx("text-left text-sm truncate", hasSeen && 'text-muted-foreground font-light')}>{lastMessageSenderEmail === userEmail ? `You: ${lastMessageText}` : lastMessageText}</p>
                 </section>
             </div>
         </Button>

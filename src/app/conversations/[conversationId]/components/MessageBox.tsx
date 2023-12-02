@@ -34,8 +34,8 @@ export default function MessageBox({ isLast, data }: Props) {
 
     const message = clsx(
         "text-sm w-fit overflow-hidden",
-        isOwn ? 'bg-sky-500 text-white' : 'bg-gray-100',
-        data.image ? 'rounded-md p-0' : 'rounded-full py-2 px-3'
+        isOwn ? 'bg-sky-500 text-white' : 'bg-backgroundSecondary',
+        data.image ? 'rounded-md p-0' : isOwn ? 'rounded-full rounded-tr-md py-2 px-3' : 'rounded-full rounded-tl-md py-2 px-3'
     )
 
     return (
@@ -45,7 +45,7 @@ export default function MessageBox({ isLast, data }: Props) {
             </div>
 
             <div className={body}>
-                <div className="flex items-center gap-1">
+                <div className="flex items-center gap-1 ">
                     <div className="text-sm text-gray-500">
                         {data.sender.name}
                     </div>
@@ -68,6 +68,11 @@ export default function MessageBox({ isLast, data }: Props) {
                         )
                     }
                 </div>
+                {
+                    isLast && isOwn && seenList.length > 0 && (
+                        <div className="text-xs font-light text-muted-foreground">Seen by {seenList}</div>
+                    )
+                }
             </div>
         </div>
     )
