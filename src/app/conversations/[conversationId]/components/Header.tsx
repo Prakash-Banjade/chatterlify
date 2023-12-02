@@ -3,9 +3,10 @@ import Avatar from "@/app/components/Avatar";
 import { Button } from "@/components/ui/button";
 import useOtherUser from "@/hooks/useOtherUser";
 import { Conversation, User } from "@prisma/client";
-import { ArrowLeftIcon, DotsHorizontalIcon } from "@radix-ui/react-icons";
+import { ArrowLeftIcon } from "@radix-ui/react-icons";
 import Link from "next/link";
 import { useMemo } from "react";
+import ProfileDrawer from "./ProfileDrawer";
 
 type HeaderProps = {
     conversation: Conversation & {
@@ -38,11 +39,8 @@ export default function Header({ conversation }: HeaderProps) {
                 </section>
             </div>
 
-            <div className="">
-                <Button variant="ghost" size="icon" className="text-2xl">
-                    <DotsHorizontalIcon />
-                </Button>
-            </div>
+            <ProfileDrawer data={conversation} />
+               
 
         </div>
     )
