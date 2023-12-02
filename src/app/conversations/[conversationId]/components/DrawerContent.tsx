@@ -6,7 +6,8 @@ import React, { useMemo } from 'react'
 import { format } from 'date-fns';
 import { Conversation, User } from '@prisma/client';
 import Avatar from '@/app/components/Avatar';
-import AlertDialogBox from './AlertDialog';
+import AlertDialogBox from '../../../../components/utils/AlertDialog';
+import ConfirmModal from './ConfirmModal';
 
 type Props = {
     data: Conversation & {
@@ -41,7 +42,7 @@ export default function DrawerContent({ data }: Props) {
                 <span className="text-xs text-muted-foreground">{statusText}</span>
 
                 <div className="mt-10 flex flex-col gap-2 items-center justify-center">
-                    <AlertDialogBox />
+                    <ConfirmModal />
                     <span className="text-sm text-muted-foreground">Delete</span>
                 </div>
             </div>
