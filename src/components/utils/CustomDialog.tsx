@@ -9,7 +9,7 @@ import {
 
 type Props = {
     children: React.ReactNode,
-    title: string,
+    title?: string,
     description?: string,
     content: React.ReactNode,
     open: boolean,

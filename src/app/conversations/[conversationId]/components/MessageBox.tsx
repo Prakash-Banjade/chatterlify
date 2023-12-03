@@ -4,6 +4,7 @@ import clsx from "clsx";
 import Avatar from "@/app/components/Avatar";
 import { format } from "date-fns";
 import Image from "next/image";
+import ImageModal from "./ImageModal";
 
 type Props = {
     isLast?: boolean,
@@ -56,13 +57,15 @@ export default function MessageBox({ isLast, data }: Props) {
                 <div className={message}>
                     {
                         data?.image ? (
-                            <Image
-                                alt="Image"
-                                height="288"
-                                width="288"
-                                src={data.image}
-                                className="object-cover cursor-pointer hover:scale110 transition"
-                            />
+                            <ImageModal src={data.image}>
+                                <Image
+                                    alt="Image"
+                                    height="288"
+                                    width="288"
+                                    src={data.image}
+                                    className="object-cover cursor-pointer hover:scale110 transition"
+                                />
+                            </ImageModal>
                         ) : (
                             <div>{data.body}</div>
                         )
