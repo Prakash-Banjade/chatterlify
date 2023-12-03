@@ -26,7 +26,7 @@ export default function Header({ conversation }: HeaderProps) {
     }, [conversation])
 
     return (
-        <div className="w-full flex border-b sm:px-4 border-border py-3 px-4 lg:px-6 justify-between items-center shadow-sm">
+        <div className="w-full flex border-b sm:px-4 border-border py-3 px-1.5 lg:px-6 justify-between items-center shadow-sm">
             <div className="flex gap-3 items-center">
                 <Button variant="ghost" size="icon" className="lg:hidden flex" asChild>
                     <Link href="/conversations"><ArrowLeftIcon className="h-5 w-5" /></Link>

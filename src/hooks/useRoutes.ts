@@ -1,7 +1,8 @@
 import {
     PersonIcon,
     ExitIcon,
-    ChatBubbleIcon
+    ChatBubbleIcon,
+    GearIcon
 } from '@radix-ui/react-icons'
 import { signOut } from 'next-auth/react'
 
@@ -31,7 +32,13 @@ export default function useRoutes() {
             href: '#',
             onClick: () => signOut(),
             icon: ExitIcon
-        }
+        },
+        {
+            label: 'Settings',
+            href: '/settings',
+            icon: GearIcon,
+            active: !!pathname.includes('settings')
+        },
     ], [pathname, conversationId])
 
     return routes;

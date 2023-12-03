@@ -17,7 +17,7 @@ export default function AuthPageWrapper({ children }: Props) {
             {/* <ThemeToggle /> */}
             <div className="container relative lg:min-h-screen flex-col items-center justify-center lg:grid lg:max-w-none lg:grid-cols-2 px-0">
                 {/* Left Desktop View */}
-                <div className="relative hidden h-full flex-col bg-muted p-10 text-white dark:border-r lg:flex">
+                <div className="relative hidden h-full flex-col bg-muted p-10 dark:border-r lg:flex">
                     <Link href="/" className="relative z-20 flex items-center text-lg gap-3 font-medium">
                         <Logo />
                         {process.env.APP_NAME}

@@ -91,7 +91,7 @@ export default function Form() {
                     required
                     placeholder="Write a message"
                 />
-                <Button type="submit" variant="secondary" size="icon" className="rounded-[50%] bg-sky-500 hover:bg-sky-600 transition text-xl rotate-90">
+                <Button type="submit" variant="secondary" size="icon" className="bg-transparent hover:bg-transparent rounded-[50%] text-sky-600 text-2xl rotate-90">
                     <HiPaperAirplane />
                 </Button>
             </form>

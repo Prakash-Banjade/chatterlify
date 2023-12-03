@@ -3,6 +3,7 @@
 import useConversation from "@/hooks/useConversation";
 import useRoutes from "@/hooks/useRoutes"
 import MobileItem from "./MobileItem";
+import { useMemo } from "react";
 
 export default function MobileFooter() {
 
@@ -12,10 +13,8 @@ export default function MobileFooter() {
     if (isOpen) return null;
 
     return (
-        <div className="fixed w-full bottom-0 z-50 lg:hidden flex border-t-[1px] items-center justify-center">
+        <div className="fixed w-full bottom-0 z-50 lg:hidden flex border-t-[1px] items-center justify-center bg-background">
 
-            {/* <nav className="mt-4 flex flex-col justify-between">
-                <ul className="flex flex-col items-center space-y-1" role="list"> */}
             {
                 routes.map(route => (
                     <MobileItem
@@ -28,8 +27,6 @@ export default function MobileFooter() {
                     />
                 ))
             }
-            {/* </ul>
-            </nav> */}
         </div>
     )
 }

@@ -9,6 +9,7 @@ import clsx from "clsx";
 import { Button } from "@/components/ui/button";
 import { MdOutlineGroupAdd } from "react-icons/md"
 import ConversationBox from "./ConversationBox";
+import SettingsModal from "@/app/components/sidebar/SettingsModal";
 
 type Props = {
     initialItems: FullConversation[] | undefined,
@@ -32,9 +33,7 @@ export default function ConversationLIst({ initialItems }: Props) {
                     <div className="">
                         <h2 className="text-2xl font-semiboldbold">Messages</h2>
                     </div>
-                    <Button variant="outline" size="icon" className="text-xl" title="Create new group">
-                        <MdOutlineGroupAdd />
-                    </Button>
+                   <SettingsModal />
                 </div>
 
                 {
