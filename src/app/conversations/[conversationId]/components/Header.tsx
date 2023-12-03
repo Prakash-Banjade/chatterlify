@@ -7,6 +7,7 @@ import { ArrowLeftIcon } from "@radix-ui/react-icons";
 import Link from "next/link";
 import { useMemo } from "react";
 import ProfileDrawer from "./ProfileDrawer";
+import GroupAvatar from "@/app/components/GroupAvatar";
 
 type HeaderProps = {
     conversation: Conversation & {
@@ -32,7 +33,9 @@ export default function Header({ conversation }: HeaderProps) {
                     <Link href="/conversations"><ArrowLeftIcon className="h-5 w-5" /></Link>
                 </Button>
 
-                <Avatar user={otherUser} activeStatus />
+                {
+                    conversation?.isGroup ? <GroupAvatar users={conversation.users} /> : <Avatar user={otherUser} activeStatus />
+                }
                 <section className="flex flex-col gap-1">
                     <span className="text-sm">{conversation.name || otherUser.name}</span>
                     <span className="text-xs text-muted-foreground">{statusText}</span>
@@ -40,7 +43,7 @@ export default function Header({ conversation }: HeaderProps) {
             </div>
 
             <ProfileDrawer data={conversation} />
-               
+
 
         </div>
     )

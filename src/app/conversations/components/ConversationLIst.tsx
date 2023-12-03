@@ -1,21 +1,20 @@
 'use client'
 
-import { Conversation } from "@prisma/client"
 import { FullConversation } from "../../../../types"
 import { useState } from "react"
 import { useRouter } from "next/navigation";
 import useConversation from "@/hooks/useConversation";
 import clsx from "clsx";
-import { Button } from "@/components/ui/button";
-import { MdOutlineGroupAdd } from "react-icons/md"
 import ConversationBox from "./ConversationBox";
-import SettingsModal from "@/app/components/sidebar/SettingsModal";
+import { User } from "@prisma/client";
+import GroupChatModal from "./GroupChatModal";
 
 type Props = {
     initialItems: FullConversation[] | undefined,
+    users: User[] | null,
 }
 
-export default function ConversationLIst({ initialItems }: Props) {
+export default function ConversationLIst({ initialItems, users }: Props) {
 
     const [items, setItems] = useState(initialItems);
 
@@ -33,7 +32,7 @@ export default function ConversationLIst({ initialItems }: Props) {
                     <div className="">
                         <h2 className="text-2xl font-semiboldbold">Messages</h2>
                     </div>
-                   <SettingsModal />
+                    <GroupChatModal users={users} />
                 </div>
 
                 {

@@ -8,6 +8,9 @@ import { Conversation, User } from '@prisma/client';
 import Avatar from '@/app/components/Avatar';
 import AlertDialogBox from '../../../../components/utils/AlertDialog';
 import ConfirmModal from './ConfirmModal';
+import GroupAvatar from '@/app/components/GroupAvatar';
+import { Button } from '@/components/ui/button';
+import { Pencil2Icon } from '@radix-ui/react-icons';
 
 type Props = {
     data: Conversation & {
@@ -36,9 +39,16 @@ export default function DrawerContent({ data }: Props) {
         <div className="relative mt-10 flex-1 px-4 sm:px-6">
             <div className="flex flex-col items-center">
                 <div className="mb-2">
-                    <Avatar user={otherUser} activeStatus className="h-12 w-12" />
+                    {
+                        data?.isGroup ? <GroupAvatar users={data.users} /> : <Avatar user={otherUser} activeStatus />
+                    }
                 </div>
-                <span>{title}</span>
+                <div className="flex items-center relative">
+                    <span>{title}</span>
+                    <Button size="icon" variant={"ghost"} className='absolute -right-9'>
+                        <Pencil2Icon className='text-muted-foreground' />
+                    </Button>
+                </div>
                 <span className="text-xs text-muted-foreground">{statusText}</span>
 
                 <div className="mt-10 flex flex-col gap-2 items-center justify-center">
@@ -49,7 +59,25 @@ export default function DrawerContent({ data }: Props) {
             <div className='mt-10 flex flex-col'>
                 <dl className="space-y-8 sm:space-y-6">
                     {
-                        !data.isGroup && (
+                        data.isGroup ? (
+                            <>
+                                <section className="w-full flex items-center gap-4 justify-between">
+                                    <p>Members</p>
+                                    <Button variant="outline" size="sm">Add member</Button>
+                                </section>
+                                <div className="flex flex-wrap gap-2 max-h-[400px] overflow-y-auto">
+                                    {data.users.map(user => (
+                                        <div className="flex gap-3 items-center">
+                                            <Avatar key={user.id} user={user} activeStatus />
+                                            <div className="flex flex-col gap-1.5">
+                                                <span className="text-sm">{user.name}</span>
+                                                <span className="text-xs text-muted-foreground">{user.email}</span>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </>
+                        ) : (
                             <>
                                 <div>
                                     <dt className="text-sm font-medium text-gray-500 sm:2-40 sm:flex-shrink-0">

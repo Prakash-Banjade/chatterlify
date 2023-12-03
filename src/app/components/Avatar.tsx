@@ -5,7 +5,11 @@ import { cn } from "@/lib/utils";
 import Image from "next/image";
 
 type Props = {
-    user: User,
+    user: User | {
+        id?: string,
+        name: string,
+        image: string,
+    },
     activeStatus?: boolean,
     className?: string,
 }

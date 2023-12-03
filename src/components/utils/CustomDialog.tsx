@@ -12,12 +12,14 @@ type Props = {
     title: string,
     description?: string,
     content: React.ReactNode,
+    open: boolean,
+    setOpen: React.Dispatch<React.SetStateAction<boolean>>,
 }
 
 
-export default function CustomDialog({ children, title, description, content }: Props) {
+export default function CustomDialog({ children, title, description, content, open, setOpen }: Props) {
     return (
-        <Dialog>
+        <Dialog open={open} onOpenChange={setOpen}>
             <DialogTrigger asChild>
                 {children}
             </DialogTrigger>

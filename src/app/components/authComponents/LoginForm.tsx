@@ -49,9 +49,8 @@ export default function LoginForm({ className, ...props }: LoginFormProps) {
         try {
             const res = await signIn('credentials', { ...values, redirect: false, });
 
-            console.log("res", res);
 
-            if (res?.ok && res?.status === 200) console.log('logged in')
+            if (res?.ok && res?.status === 200) router.push('/users')
 
             if (res?.error) {
                 setError('Invalid username or password')

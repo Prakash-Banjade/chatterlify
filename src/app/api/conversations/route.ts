@@ -24,8 +24,8 @@ export async function POST(req: Request) {
                     isGroup,
                     users: {
                         connect: [
-                            ...members.map((member: { value: string }) => ({
-                                id: member.value
+                            ...members.map((member: { id: string }) => ({
+                                id: member.id
                             })),
                             {
                                 id: currentUser.id // our own id isn't sent because we are the one who created group and own id can't be selected in frontend, so define own id explicitly

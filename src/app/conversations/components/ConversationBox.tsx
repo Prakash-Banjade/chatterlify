@@ -9,6 +9,7 @@ import useOtherUser from "@/hooks/useOtherUser"
 import { Button } from "@/components/ui/button"
 import Avatar from "@/app/components/Avatar"
 import { format } from 'date-fns'
+import GroupAvatar from "@/app/components/GroupAvatar"
 
 type Props = {
     data: FullConversation,
@@ -52,14 +53,16 @@ export default function ConversationBox({ data, selected }: Props) {
     const lastMessageText = useMemo(() => {
         if (lastMessage?.image) return 'Sent an image';
 
-        if (lastMessage?.body) return lastMessage.body;
+        if (lastMessage?.body) return lastMessage.body.length > 20 ? lastMessage.body.slice(0, 20) + '...' : lastMessage.body;
 
         return 'Started a conversation'
     }, [lastMessage])
 
     return (
         <Button variant={selected ? 'secondary' : 'ghost'} className="w-full relative flex items-center space-x-3 px-3 justify-start py-8 gap-2" onClick={handleClick}>
-            <Avatar user={otherUser} className="md:h-10 md:w-10 h-12 w-12" />
+            {
+                data.isGroup ? <GroupAvatar users={data.users} className="md:h-10 md:w-10 h-12 w-12" /> : (<Avatar user={otherUser} className="md:h-10 md:w-10 h-12 w-12" />)
+            }
             <div className="flex flex-1 flex-col gap-1">
                 <section className="justify-between items-center flex gap-1">
                     <span className="text-base font-medium">{data.name || otherUser?.name}</span>
