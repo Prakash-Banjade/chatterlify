@@ -13,6 +13,8 @@ type Props = {
 
 export default function MessageBox({ isLast, data }: Props) {
 
+    // console.log('isLastSeenMessage: ', isLastSeenMessage)
+
     const session = useSession();
 
     const isOwn = session?.data?.user?.email === data?.sender?.email;
@@ -30,28 +32,29 @@ export default function MessageBox({ isLast, data }: Props) {
 
     const body = clsx(
         "flex flex-col gap-2",
-        isOwn && 'items-end'
+        isOwn && 'items-end',
+        !data.image && 'flex-1 max-w-full',
     )
 
     const message = clsx(
         "text-sm w-fit overflow-hidden",
-        isOwn ? 'bg-sky-500 text-white' : 'bg-backgroundSecondary',
-        data.image ? 'rounded-md p-0' : isOwn ? 'rounded-full rounded-tr-md py-2 px-3' : 'rounded-full rounded-tl-md py-2 px-3'
+        isOwn ? 'bg-sky-600 text-white' : 'bg-backgroundSecondary',
+        data.image ? 'rounded-md p-0' : isOwn ? 'rounded-[20px] rounded-tr-md py-2 px-3 max-w-[80%]' : 'rounded-[20px] rounded-tl-md py-2 px-3 max-w-[80%]'
     )
 
     return (
         <div className={container}>
-            <div className={avatar}>
+            {!isOwn && <div className={avatar}>
                 <Avatar user={data?.sender} />
-            </div>
+            </div>}
 
             <div className={body}>
-                <div className="flex items-center gap-1 ">
+                <div className="flex items-center gap-1">
                     <div className="text-sm text-gray-500">
-                        {data.sender.name}
+                        {isOwn ? 'You' : data?.sender?.name}
                     </div>
                     <div className="text-xs text-gray-400">
-                        {format(new Date(data.createdAt), 'p')}
+                        {format(new Date(data?.createdAt), 'p')}
                     </div>
                 </div>
                 <div className={message}>
@@ -67,13 +70,13 @@ export default function MessageBox({ isLast, data }: Props) {
                                 />
                             </ImageModal>
                         ) : (
-                            <div>{data.body}</div>
+                            <div className="w-full whitespace-normal break-words">{data?.body}</div>
                         )
                     }
                 </div>
                 {
-                    isLast && isOwn && seenList.length > 0 && (
-                        <div className="text-xs font-light text-muted-foreground">Seen by {seenList}</div>
+                    (isLast && isOwn && seenList.length > 0) && (
+                        <div className="text-xs font-light text-muted-foreground">Seen by <span className="font-medium">{seenList}</span></div>
                     )
                 }
             </div>
