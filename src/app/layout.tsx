@@ -4,6 +4,7 @@ import './globals.css'
 import { ThemeProvider } from '@/context/ThemeProvider'
 import { Toaster } from "@/components/ui/toaster"
 import AuthProvider from '@/context/AuthProvider'
+import NextTopLoader from 'nextjs-toploader';
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -27,6 +28,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <AuthProvider>
+            <NextTopLoader />
             {children}
           </AuthProvider>
           <Toaster />

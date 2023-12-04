@@ -10,7 +10,7 @@ import {
     AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
 import { Icons } from "../ui/icons"
-import { buttonVariants } from "../ui/button"
+import { Button, buttonVariants } from "../ui/button"
 import clsx from "clsx"
 
 type Props = {
@@ -21,14 +21,16 @@ type Props = {
     handleFunction: () => void,
     trigger: JSX.Element,
     actionIcon?: JSX.Element,
-    destructive?: boolean
+    destructive?: boolean,
+    open: boolean,
+    setOpen: React.Dispatch<React.SetStateAction<boolean>>,
 }
 
-export default function AlertDialogBox({ children, title, description, handleFunction, loading, trigger, destructive, actionIcon }: Props) {
+export default function AlertDialogBox({ children, title, description, handleFunction, loading, trigger, destructive, actionIcon, open, setOpen }: Props) {
 
 
     return (
-        <AlertDialog>
+        <AlertDialog open={open} onOpenChange={setOpen}>
             <AlertDialogTrigger asChild>
                 {children}
             </AlertDialogTrigger>
@@ -46,9 +48,9 @@ export default function AlertDialogBox({ children, title, description, handleFun
                 </AlertDialogHeader>
                 <AlertDialogFooter>
                     <AlertDialogCancel disabled={loading}>Cancel</AlertDialogCancel>
-                    <AlertDialogAction onClick={() => handleFunction()} disabled={loading} className={clsx(destructive && buttonVariants({ variant: "destructive" }))} asChild>
+                    <Button onClick={() => handleFunction()} disabled={loading} className={clsx(destructive && buttonVariants({ variant: "destructive" }))} asChild>
                         {trigger}
-                    </AlertDialogAction>
+                    </Button>
                 </AlertDialogFooter>
             </AlertDialogContent>
         </AlertDialog>

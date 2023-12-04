@@ -10,6 +10,7 @@ import Avatar from "../Avatar";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { GearIcon } from "@radix-ui/react-icons";
+import ProfileDropDown from "../ProfileDropDown";
 
 type DesktopSidebarProps = {
     currentUser: User
@@ -31,7 +32,6 @@ export default function DesktopSidebar({ currentUser }: DesktopSidebarProps) {
                                 label={route.label}
                                 icon={route.icon}
                                 active={!!route.active}
-                                onClick={route.onClick}
                             />
                         ))
                     }
@@ -39,9 +39,11 @@ export default function DesktopSidebar({ currentUser }: DesktopSidebarProps) {
             </nav>
 
             <nav className="flex flex-col justify-between items-center mt-4 pb-2 gap-4">
-                <div className="cursor-pointer">
-                    <Avatar user={currentUser} />
-                </div>
+                <ProfileDropDown>
+                    <div className="cursor-pointer">
+                        <Avatar user={currentUser} />
+                    </div>
+                </ProfileDropDown>
                 <div className="">
                     <Button variant="ghost" size="icon" asChild>
                         <Link href="/settings"><GearIcon className="h-7 w-7" /></Link>

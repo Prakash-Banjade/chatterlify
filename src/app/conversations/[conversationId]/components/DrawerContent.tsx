@@ -67,8 +67,8 @@ export default function DrawerContent({ data }: Props) {
                                 </section>
                                 <div className="flex flex-wrap gap-2 max-h-[400px] overflow-y-auto">
                                     {data.users.map(user => (
-                                        <div className="flex gap-3 items-center">
-                                            <Avatar key={user.id} user={user} activeStatus />
+                                        <div className="flex gap-3 items-center" key={user.id}>
+                                            <Avatar user={user} activeStatus />
                                             <div className="flex flex-col gap-1.5">
                                                 <span className="text-sm">{user.name}</span>
                                                 <span className="text-xs text-muted-foreground">{user.email}</span>

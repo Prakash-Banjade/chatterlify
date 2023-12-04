@@ -14,6 +14,7 @@ export default function ConfirmModal() {
     const router = useRouter();
     const { conversationId } = useConversation();
     const [isLoading, setIsLoading] = useState(false);
+    const [open, setOpen] = useState(false)
     const { toast } = useToast();
 
     const onDelete = useCallback(async () => {
@@ -42,6 +43,7 @@ export default function ConfirmModal() {
             })
         } finally {
             setIsLoading(false);
+            setOpen(false);
         }
     }, [conversationId, router])
 
@@ -71,7 +73,7 @@ export default function ConfirmModal() {
     const actionIcon = <TrashIcon className="h-10 w-10 text-red-500" />
 
     return (
-        <AlertDialogBox title={title} description={alertDesc} handleFunction={onDelete} loading={isLoading} trigger={triggerBtn} destructive actionIcon={actionIcon}>
+        <AlertDialogBox title={title} description={alertDesc} handleFunction={onDelete} loading={isLoading} trigger={triggerBtn} destructive actionIcon={actionIcon} open={open} setOpen={setOpen}>
             <Button variant="outline" size="icon" title="Delete this conversation">
                 <TrashIcon className="text-red-500 h-6 w-6" />
             </Button>

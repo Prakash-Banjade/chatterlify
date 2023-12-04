@@ -30,7 +30,7 @@ export default function ConversationLIst({ initialItems, users }: Props) {
             <div className="px-4">
                 <div className="flex gap-2 items-center mb-4 pt-4 justify-between">
                     <div className="">
-                        <h2 className="text-2xl font-semiboldbold">Messages</h2>
+                        <h2 className="text-2xl font-semiboldbold">Chats</h2>
                     </div>
                     <GroupChatModal users={users} />
                 </div>

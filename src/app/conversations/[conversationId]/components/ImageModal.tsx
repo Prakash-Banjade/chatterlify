@@ -19,8 +19,6 @@ export default function ImageModal({ children, src }: Props) {
 
     if (!src) return null;
 
-    console.log(src)
-
     return (
         <Dialog>
             <DialogTrigger asChild>
