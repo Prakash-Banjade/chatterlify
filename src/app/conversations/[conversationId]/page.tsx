@@ -53,11 +53,11 @@ export default async function ConversationId({ params }: { params: Params }) {
     )
 }
 
-// For SSG
-export async function generateStaticParams() {
-    const conversations = await getConversations();
+// // For SSG
+// export async function generateStaticParams() {
+//     const conversations = await getConversations();
 
-    return conversations.map(conversation => ({
-        conversationId: conversation.id.toString()
-    }))
-}
+//     return conversations.map(conversation => ({
+//         conversationId: conversation.id.toString()
+//     }))
+// }

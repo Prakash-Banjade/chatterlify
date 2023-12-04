@@ -54,7 +54,7 @@ export default function UserBox({ user }: Props) {
             } finally {
                 setIsLoading(false);
             }
-        }, [user, router]
+        }, [user, router, toast]
     )
     return (
         <Button variant="ghost" className="w-full relative flex items-center space-x-3 px-3 justify-start py-8 gap-2" onClick={handleClick}>

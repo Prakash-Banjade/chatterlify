@@ -2,7 +2,7 @@ import { Metadata } from "next"
 import LoginForm from "./components/authComponents/LoginForm"
 import AuthPageWrapper from "@/app/components/authComponents/AuthPageWrapper"
 import { getServerSession } from 'next-auth'
-import { authOptions } from "./api/auth/[...nextauth]/route"
+import { authOptions } from "./api/auth/[...nextauth]/options"
 import { redirect } from "next/navigation"
 
 export const metadata: Metadata = {

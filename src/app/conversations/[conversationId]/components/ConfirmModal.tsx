@@ -45,7 +45,7 @@ export default function ConfirmModal() {
             setIsLoading(false);
             setOpen(false);
         }
-    }, [conversationId, router])
+    }, [conversationId, router, toast])
 
     const triggerBtn = (
         <Button variant="destructive" onClick={() => onDelete()} disabled={isLoading}>

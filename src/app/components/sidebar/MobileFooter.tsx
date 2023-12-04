@@ -23,7 +23,6 @@ export default function MobileFooter() {
                         label={route.label}
                         icon={route.icon}
                         active={!!route.active}
-                        onClick={route.onClick}
                     />
                 ))
             }
