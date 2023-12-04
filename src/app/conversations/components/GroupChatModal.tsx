@@ -4,7 +4,7 @@ import CustomDialog from "@/components/utils/CustomDialog"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { User } from "@prisma/client"
 import { useRouter } from "next/navigation"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import { MdOutlineGroupAdd } from "react-icons/md"
 import { z } from "zod"
@@ -56,6 +56,10 @@ export default function GroupChatModal({ users }: Props) {
             members: []
         }
     })
+
+    useEffect(() => {
+        form.reset();
+    }, [open])
 
     const members = form.watch('members')
 
