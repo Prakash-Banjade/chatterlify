@@ -46,24 +46,18 @@ export default function ConversationLIst({ initialItems, users }: Props) {
         }
 
         const updateConversationHanlder = (conversation: FullConversation) => {
-            console.log('updatedMessage: ', conversation)
             if (!conversation.messages) return;
 
-            let updatedConversation: FullConversation;
-
-            items.forEach(item => {
-                if (item.id === conversation.id) {
-                    updatedConversation = {
-                        ...item,
-                        messages: conversation.messages,
-                    }
+            setItems((current) => current.map((currentConversation) => {
+                if (currentConversation.id === conversation.id) {
+                    return {
+                        ...currentConversation,
+                        messages: conversation.messages
+                    };
                 }
-            })
 
-            const updatedItems = items.filter(item => item.id !== conversation.id)
-            updatedItems.unshift(updatedConversation!)
-
-            setItems(updatedItems)
+                return currentConversation;
+            }));
         }
 
         const removeHandler = (conversation: FullConversation) => {
