@@ -60,7 +60,7 @@ export default function GroupChatModal({ users }: Props) {
 
     useEffect(() => {
         form.reset();
-    }, [open])
+    }, [])
 
     const members = form.watch('members')
 

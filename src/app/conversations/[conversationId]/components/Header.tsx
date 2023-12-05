@@ -26,7 +26,7 @@ export default function Header({ conversation }: HeaderProps) {
             return `${conversation.users.length} members`
         }
         return !!members.includes(otherUser?.email!) ? 'Active' : 'Offline'
-    }, [conversation, members])
+    }, [conversation, members, otherUser?.email])
 
     return (
         <div className="w-full flex border-b sm:px-4 border-border py-3 px-1.5 lg:px-6 justify-between items-center shadow-sm">

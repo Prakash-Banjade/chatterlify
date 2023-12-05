@@ -86,7 +86,7 @@ export default function ConversationLIst({ initialItems, users }: Props) {
             pusherClient.unbind('conversation:update', updateConversationHanlder);
             pusherClient.unbind('conversation:remove', removeHandler);
         }
-    }, [pusherKey, conversationId, router])
+    }, [pusherKey, conversationId, router, items])
 
     const filteredConversations = (conversations: FullConversation[]) => {
         if (!query) return conversations;

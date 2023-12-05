@@ -20,6 +20,8 @@ type Props = {
 
 export default function Avatar({ user, activeStatus, className = '' }: Props) {
 
+    const { members } = useActiveList();
+    
     if (!user) return (
         <Image alt="avatar" src="/images/avatarPlaceholder.webp" height={42} width={42} className="w-auto" />
     )
@@ -30,7 +32,6 @@ export default function Avatar({ user, activeStatus, className = '' }: Props) {
     const initials = words?.map(word => word.charAt(0).toUpperCase());
     const abbreviation = initials?.join('');
 
-    const { members } = useActiveList();
     const isActive = !!members.includes(user.email!);
 
     return (

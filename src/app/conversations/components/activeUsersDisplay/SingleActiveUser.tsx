@@ -14,14 +14,15 @@ type Props = {
 export default function SingleActiveUser({ user }: Props) {
     const router = useRouter();
 
-    if (!user || !user?.name) return null;
 
     let name = user?.name?.split(' ')[0]
-    name = name.length > 7 ? `${name.slice(0, 7)}...` : name
+    name = name && name.length > 7 ? `${name.slice(0, 7)}...` : name
 
     const handleClick = useCallback(() => {
         router.push(`/conversations/${user.id}`)
     }, [user.id, router])
+
+    if (!user || !user?.name) return null;
 
     return (
         <div className="flex flex-col items-center justify-center gap-1 cursor-pointer" role="button" onClick={() => handleClick()} title={user.name}>

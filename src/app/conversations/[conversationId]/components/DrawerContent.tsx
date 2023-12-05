@@ -35,7 +35,7 @@ export default function DrawerContent({ data }: Props) {
     const statusText = useMemo(() => {
         if (data?.isGroup) return `${data.users.length} members`
         return !!members.includes(otherUser?.email!) ? 'Active' : 'Offline'
-    }, [data, members])
+    }, [data, members, otherUser?.email])
 
     return (
         <div className="relative mt-10 flex-1 px-4 sm:px-6">
