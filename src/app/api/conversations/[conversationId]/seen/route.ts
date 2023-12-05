@@ -4,7 +4,7 @@ import prisma from "@/lib/prismadb";
 import { pusherServer } from "@/lib/pusher";
 
 type Params = {
-    conversationId: string
+    conversationId?: string
 }
 
 export async function POST(req: NextRequest, { params }: { params: Params }) {
@@ -55,16 +55,17 @@ export async function POST(req: NextRequest, { params }: { params: Params }) {
 
         await pusherServer.trigger(currentUser.email, 'conversation:update', {
             id: conversationId,
-            messsages: [updatedMessage]
+            messages: [updatedMessage]
         })
 
-        if (lastMessage.seenIds.indexOf(currentUser.id) !== -1){
-            return NextResponse.json(updatedMessage);
+        // if user has already seen the message no need to go further
+        if (lastMessage.seenIds.indexOf(currentUser.id) !== -1) {
+            return NextResponse.json(conversation);
         }
 
         await pusherServer.trigger(conversationId!, 'message:update', updatedMessage);
 
-        return NextResponse.json(updatedMessage);
+        return new NextResponse('Success')
 
     } catch (e) {
         console.error(e)

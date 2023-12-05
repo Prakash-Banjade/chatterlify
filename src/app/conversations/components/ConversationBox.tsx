@@ -1,5 +1,5 @@
 'use client'
-import { useCallback, useMemo } from "react"
+import { useCallback, useEffect, useMemo } from "react"
 import { useRouter } from "next/navigation"
 import { Conversation, Message, User } from "@prisma/client"
 import { useSession } from "next-auth/react"
@@ -32,6 +32,10 @@ export default function ConversationBox({ data, selected }: Props) {
 
         return messages[messages.length - 1]
     }, [data.messages])
+
+    // useEffect(() => {
+    //     console.log('lastMessage: ', data)
+    // }, [data])
 
     const userEmail = useMemo(() => {
         return session?.data?.user?.email;

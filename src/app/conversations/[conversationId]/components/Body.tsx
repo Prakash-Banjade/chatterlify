@@ -21,7 +21,7 @@ export default function Body({ initialMessages }: Props) {
     useEffect(() => {
         fetch(`/api/conversations/${conversationId}/seen`, {
             method: 'POST'
-        }).catch((e) => console.log(e))
+        }).catch((e) => console.log(e))        
     }, [conversationId])
 
     useEffect(() => {
