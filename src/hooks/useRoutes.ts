@@ -17,7 +17,7 @@ export default function useRoutes() {
             label: 'Chat',
             href: '/conversations',
             icon: ChatBubbleIcon,
-            active: pathname === '/conversation' || !!conversationId
+            active: !!pathname?.includes('conversations') || !!conversationId
         },
         {
             label: 'Users',
@@ -29,7 +29,7 @@ export default function useRoutes() {
             label: 'Settings',
             href: '/settings',
             icon: GearIcon,
-            active: !!pathname.includes('settings')
+            active: !!pathname?.includes('settings')
         },
     ], [pathname, conversationId])
 

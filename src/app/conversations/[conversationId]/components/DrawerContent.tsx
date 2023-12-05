@@ -11,6 +11,7 @@ import ConfirmModal from './ConfirmModal';
 import GroupAvatar from '@/app/components/GroupAvatar';
 import { Button } from '@/components/ui/button';
 import { Pencil2Icon } from '@radix-ui/react-icons';
+import useActiveList from '@/hooks/useActiveList';
 
 type Props = {
     data: Conversation & {
@@ -21,6 +22,7 @@ type Props = {
 export default function DrawerContent({ data }: Props) {
 
     const otherUser = useOtherUser(data);
+    const { members } = useActiveList();
 
     const joinedDate = useMemo(() => {
         return format(new Date(otherUser.createdAt), 'PP');
@@ -32,8 +34,8 @@ export default function DrawerContent({ data }: Props) {
 
     const statusText = useMemo(() => {
         if (data?.isGroup) return `${data.users.length} members`
-        return 'Active'
-    }, [data])
+        return !!members.includes(otherUser?.email!) ? 'Active' : 'Offline'
+    }, [data, members])
 
     return (
         <div className="relative mt-10 flex-1 px-4 sm:px-6">

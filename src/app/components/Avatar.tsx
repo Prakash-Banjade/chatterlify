@@ -1,14 +1,18 @@
 
+'use client'
+
 import { User } from "@prisma/client";
 import { Avatar as AvatarWrapper, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { cn } from "@/lib/utils";
 import Image from "next/image";
+import useActiveList from "@/hooks/useActiveList";
 
 type Props = {
     user: User | {
         id?: string,
         name: string,
         image: string,
+        email: string,
     },
     activeStatus?: boolean,
     className?: string,
@@ -26,6 +30,9 @@ export default function Avatar({ user, activeStatus, className = '' }: Props) {
     const initials = words?.map(word => word.charAt(0).toUpperCase());
     const abbreviation = initials?.join('');
 
+    const { members } = useActiveList();
+    const isActive = !!members.includes(user.email!);
+
     return (
         <div className="relative">
             <AvatarWrapper className={cn("h-8 w-8", className)}>
@@ -33,7 +40,7 @@ export default function Avatar({ user, activeStatus, className = '' }: Props) {
                 <AvatarFallback>{abbreviation}</AvatarFallback>
             </AvatarWrapper>
 
-            {!!activeStatus && <span className="absolute block rounded-full bg-green-500 ring-2 ring-background top-0 right-0 h-2 w-2 md:h-2.5 md:w-2.5"></span>}
+            {!!activeStatus && isActive && <span className="absolute block rounded-full bg-green-500 ring-2 ring-background top-0 right-0 h-2 w-2 md:h-2.5 md:w-2.5"></span>}
         </div>
     )
 }

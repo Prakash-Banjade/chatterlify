@@ -17,11 +17,11 @@ import Link from "next/link"
 export default function ProfileDropDown({ children }: { children: React.ReactNode }) {
     return (
         <DropdownMenu>
-            <DropdownMenuTrigger>{children}</DropdownMenuTrigger>
+            <DropdownMenuTrigger asChild>{children}</DropdownMenuTrigger>
             <DropdownMenuContent>
                 <DropdownMenuLabel>My Account</DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem className="p-0">
+                <DropdownMenuItem className="p-0" asChild>
                     <Button asChild variant="ghost" className="flex items-center gap-3 px-1 w-full justify-start">
                         <Link href="/settings">
                             <AvatarIcon className="h-5 w-5" />
@@ -29,7 +29,7 @@ export default function ProfileDropDown({ children }: { children: React.ReactNod
                         </Link>
                     </Button>
                 </DropdownMenuItem>
-                <DropdownMenuItem className="p-0">
+                <DropdownMenuItem className="p-0" asChild>
                     <Button variant="ghost" className="flex items-center gap-3 px-1 w-full justify-start" onClick={() => signOut()}>
                         <ExitIcon className="h-5 w-5" />
                         Log out

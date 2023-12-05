@@ -8,6 +8,7 @@ import Link from "next/link";
 import { useMemo } from "react";
 import ProfileDrawer from "./ProfileDrawer";
 import GroupAvatar from "@/app/components/GroupAvatar";
+import useActiveList from "@/hooks/useActiveList";
 
 type HeaderProps = {
     conversation: Conversation & {
@@ -18,13 +19,14 @@ type HeaderProps = {
 export default function Header({ conversation }: HeaderProps) {
 
     const otherUser = useOtherUser(conversation);
+    const { members } = useActiveList();
 
     const statusText = useMemo(() => {
         if (conversation.isGroup) {
             return `${conversation.users.length} members`
         }
-        return 'Active'
-    }, [conversation])
+        return !!members.includes(otherUser?.email!) ? 'Active' : 'Offline'
+    }, [conversation, members])
 
     return (
         <div className="w-full flex border-b sm:px-4 border-border py-3 px-1.5 lg:px-6 justify-between items-center shadow-sm">

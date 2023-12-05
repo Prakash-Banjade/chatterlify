@@ -41,7 +41,7 @@ export default function DesktopSidebar({ currentUser }: DesktopSidebarProps) {
             <nav className="flex flex-col justify-between items-center mt-4 pb-2 gap-4">
                 <ProfileDropDown>
                     <div className="cursor-pointer">
-                        <Avatar user={currentUser} />
+                        <Avatar user={currentUser} activeStatus />
                     </div>
                 </ProfileDropDown>
                 <div className="">

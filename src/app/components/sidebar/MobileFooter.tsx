@@ -4,8 +4,16 @@ import useConversation from "@/hooks/useConversation";
 import useRoutes from "@/hooks/useRoutes"
 import MobileItem from "./MobileItem";
 import { useMemo } from "react";
+import ProfileDropDown from "../ProfileDropDown";
+import Avatar from "../Avatar";
+import { User } from "@prisma/client";
+import { Button } from "@/components/ui/button";
 
-export default function MobileFooter() {
+type MobileFooterProps = {
+    currentUser: User
+}
+
+export default function MobileFooter({ currentUser }: MobileFooterProps) {
 
     const routes = useRoutes();
     const { isOpen } = useConversation();
@@ -26,6 +34,11 @@ export default function MobileFooter() {
                     />
                 ))
             }
+            <ProfileDropDown>
+                <Button variant="ghost" className="rounded-none flex leading-6 text-sm gap-x-3 font-semibold w-full p-5 py-7">
+                    <Avatar user={currentUser} />
+                </Button>
+            </ProfileDropDown>
         </div>
     )
 }

@@ -8,14 +8,15 @@ type Props = {
         image: string,
         id: string,
         name: string,
+        email: string,
     }[],
-    setMembers: (id: string, name: string, image: string) => void,
+    setMembers: (id: string, name: string, image: string, email: string) => void,
 }
 
 export default function UsersSelect({ users, selected, setMembers }: Props) {
 
     const handleSelect = (user: User) => {
-        setMembers(user.id, user.name!, user.image!)
+        setMembers(user.id, user.name!, user.image!, user.email!)
     }
 
     if (!users || !users.length) return (

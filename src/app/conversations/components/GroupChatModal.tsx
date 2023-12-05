@@ -37,6 +37,7 @@ const GroupFormSchema = z.object({
         id: z.string(),
         name: z.string(),
         image: z.string(),
+        email: z.string().email(),
     })).min(2, { message: 'A group must have at least 3 members including you.' })
 })
 
@@ -104,11 +105,11 @@ export default function GroupChatModal({ users }: Props) {
     }
 
 
-    const setMembers = (id: string, name: string, image: string) => {
+    const setMembers = (id: string, name: string, image: string, email: string) => {
         if (members.some(u => u.id === id)) {
             form.setValue('members', members.filter(u => u.id !== id), { shouldValidate: true })
         } else {
-            form.setValue('members', [...members, { id, name, image }], { shouldValidate: true })
+            form.setValue('members', [...members, { id, name, image, email }], { shouldValidate: true })
         }
         console.log(members);
     }
@@ -148,7 +149,7 @@ export default function GroupChatModal({ users }: Props) {
                                     name = name.length > 7 ? `${name.slice(0, 7)}...` : name
 
                                     return (
-                                        <div className="relative flex flex-col items-center cursor-pointer justify-center gap-1" key={user.id} onClick={() => setMembers(user.id, user?.name!, user?.image!)}>
+                                        <div className="relative flex flex-col items-center cursor-pointer justify-center gap-1" key={user.id} onClick={() => setMembers(user.id, user?.name!, user?.image!, user?.email!)}>
                                             <Avatar user={user} className="h-10 w-10" />
                                             <span className="text-xs text-light">{name}</span>
                                             <span className="absolute -top-2 -right-2 rounded-[50%] bg-background p-1">

@@ -5,6 +5,7 @@ import { ThemeProvider } from '@/context/ThemeProvider'
 import { Toaster } from "@/components/ui/toaster"
 import AuthProvider from '@/context/AuthProvider'
 import NextTopLoader from 'nextjs-toploader';
+import ActiveStatus from './components/ActiveStatus'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -29,6 +30,7 @@ export default function RootLayout({
         >
           <AuthProvider>
             <NextTopLoader />
+            <ActiveStatus />
             {children}
           </AuthProvider>
           <Toaster />

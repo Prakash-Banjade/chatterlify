@@ -65,7 +65,7 @@ export default function ConversationBox({ data, selected }: Props) {
     return (
         <Button variant={selected ? 'secondary' : 'ghost'} className="w-full relative flex items-center space-x-3 px-3 justify-start py-8 gap-2" onClick={handleClick}>
             {
-                data.isGroup ? <GroupAvatar users={data.users} className="md:h-10 md:w-10 h-12 w-12" /> : (<Avatar user={otherUser} className="md:h-10 md:w-10 h-12 w-12" />)
+                data.isGroup ? <GroupAvatar users={data.users} className="md:h-10 md:w-10 h-12 w-12" /> : (<Avatar user={otherUser} className="md:h-10 md:w-10 h-12 w-12" activeStatus />)
             }
             <div className="flex flex-1 flex-col gap-1">
                 <section className="justify-between items-center flex gap-1">
