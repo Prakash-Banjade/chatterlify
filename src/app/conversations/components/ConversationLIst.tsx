@@ -12,6 +12,7 @@ import { useSession } from "next-auth/react";
 import { pusherClient } from "@/lib/pusher";
 import { find } from "lodash";
 import UserFilterBox from "@/app/components/UserFilterBox";
+import ActiveUsers from "./activeUsersDisplay/ActiveUsers";
 
 type Props = {
     initialItems: FullConversation[],
@@ -111,27 +112,34 @@ export default function ConversationLIst({ initialItems, users }: Props) {
             fixed inset-y-0 pb-20 lg:pb-0 lg:left-20 lg:w-80 lg:block overflow-y-auto border-r
         `, isOpen ? 'hidden' : 'block w-full left-0'
         )}>
-            <div className="px-4">
-                <div className="flex gap-2 items-center mb-4 pt-4 justify-between">
+            <div className="">
+                <div className="flex gap-2 items-center mb-4 pt-4 px-4 justify-between">
                     <div className="">
                         <h2 className="text-2xl">Chats</h2>
                     </div>
                     <GroupChatModal users={users} />
                 </div>
 
-                <div className="mb-5">
+                <div className="mb-4 px-4">
                     <UserFilterBox query={query} setQuery={setQuery} />
                 </div>
 
-                {
-                    filteredConversations(items)?.map((item) => (
-                        <ConversationBox
-                            key={item.id}
-                            data={item}
-                            selected={conversationId === item.id}
-                        />
-                    ))
-                }
+                <div className="px-4 mb-4">
+                    <ActiveUsers users={users} />
+                </div>
+
+                <div className="px-1.5">
+                    {
+                        filteredConversations(items)?.map((item) => (
+                            <ConversationBox
+                                key={item.id}
+                                data={item}
+                                selected={conversationId === item.id}
+                            />
+                        ))
+                    }
+                </div>
+
                 {!filteredConversations(items)?.length && <div className="text-muted-foreground text-sm px-4 py-2">No conversation found</div>}
 
 

@@ -21,7 +21,7 @@ export default function DesktopSidebar({ currentUser }: DesktopSidebarProps) {
     const routes = useRoutes();
 
     return (
-        <div className="hidden lg:fixed lg:inset-y-0 lg:left-0 lg:z-50 lg:w-[4.5rem] xl:px-6 lg:border-r-[1px] lg:bg-4 lg:flex lg:flex-col justify-between">
+        <div className="hidden lg:fixed lg:inset-y-0 lg:left-0 lg:z-50 lg:w-[4.5rem] xl:px-6 lg:border-r-[1px] lg:bg-4 lg:flex lg:flex-col justify-between min-w-[80px]">
             <nav className="mt-4 flex flex-col justify-between">
                 <ul className="flex flex-col items-center gap-2" role="list">
                     {
