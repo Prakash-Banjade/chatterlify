@@ -40,7 +40,7 @@ export default function SettingsLayout({ children }: SettingsLayoutProps) {
     return (
         <>
             <Sidebar>
-                <div className="space-y-6 p-10 pt-5 lg:pl-[100px] pb-16">
+                <div className="space-y-6 md:p-10 p-5 pt-5 lg:pl-[100px] pb-16">
                     <div className="space-y-0.5">
                         <h2 className="text-2xl font-bold tracking-tight">Settings</h2>
                         <p className="text-muted-foreground">

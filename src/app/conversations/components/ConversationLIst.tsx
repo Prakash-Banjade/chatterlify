@@ -11,6 +11,7 @@ import GroupChatModal from "./GroupChatModal";
 import { useSession } from "next-auth/react";
 import { pusherClient } from "@/lib/pusher";
 import { find } from "lodash";
+import UserFilterBox from "@/app/components/UserFilterBox";
 
 type Props = {
     initialItems: FullConversation[],
@@ -20,8 +21,8 @@ type Props = {
 export default function ConversationLIst({ initialItems, users }: Props) {
 
     const [items, setItems] = useState(initialItems);
+    const [query, setQuery] = useState('')
     const session = useSession();
-
     const router = useRouter();
 
     const { conversationId, isOpen } = useConversation();
@@ -44,7 +45,7 @@ export default function ConversationLIst({ initialItems, users }: Props) {
         }
 
         const updateConversationHanlder = (conversation: FullConversation) => {
-            console.log('updatedMessage: ', conversation )
+            console.log('updatedMessage: ', conversation)
             if (!conversation.messages) return;
 
             let updatedConversation: FullConversation;
@@ -86,9 +87,23 @@ export default function ConversationLIst({ initialItems, users }: Props) {
         }
     }, [pusherKey, conversationId, router])
 
-    useEffect(() => {
-        console.log('items: ', items);
-    }, [items])
+    const filteredConversations = (conversations: FullConversation[]) => {
+        if (!query) return conversations;
+
+        const otherUser = (conversation: FullConversation) => {
+            return conversation.users.filter(user => user.email !== pusherKey)[0]
+        }
+
+        return (
+            conversations.filter(con => {
+                if (con.isGroup) {
+                    return con.name?.toLocaleLowerCase().includes(query.toLocaleLowerCase())
+                } else {
+                    return otherUser(con).name?.toLocaleLowerCase().includes(query.toLocaleLowerCase())
+                }
+            })
+        )
+    }
 
 
     return (
@@ -99,13 +114,17 @@ export default function ConversationLIst({ initialItems, users }: Props) {
             <div className="px-4">
                 <div className="flex gap-2 items-center mb-4 pt-4 justify-between">
                     <div className="">
-                        <h2 className="text-2xl font-semiboldbold">Chats</h2>
+                        <h2 className="text-2xl">Chats</h2>
                     </div>
                     <GroupChatModal users={users} />
                 </div>
 
+                <div className="mb-5">
+                    <UserFilterBox query={query} setQuery={setQuery} />
+                </div>
+
                 {
-                    items?.map((item) => (
+                    filteredConversations(items)?.map((item) => (
                         <ConversationBox
                             key={item.id}
                             data={item}
@@ -113,6 +132,8 @@ export default function ConversationLIst({ initialItems, users }: Props) {
                         />
                     ))
                 }
+                {!filteredConversations(items)?.length && <div className="text-muted-foreground text-sm px-4 py-2">No conversation found</div>}
+
 
             </div>
         </aside>
