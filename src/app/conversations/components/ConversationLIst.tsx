@@ -119,7 +119,7 @@ export default function ConversationLIst({ initialItems, users }: Props) {
                 </div>
 
                 <div className="px-4 mb-4">
-                    <ActiveUsers users={users} />
+                    <ActiveUsers conversation={items} />
                 </div>
 
                 <div className="px-1.5">

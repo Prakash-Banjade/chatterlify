@@ -6,14 +6,18 @@ import { User } from '@prisma/client';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import React, { useCallback } from 'react'
+import { FullConversation } from '../../../../../types';
+import useOtherUser from '@/hooks/useOtherUser';
 
 type Props = {
-    user: User
+    data: FullConversation,
+    activeMembersEmail: string[]
 }
 
-export default function SingleActiveUser({ user }: Props) {
+export default function SingleActiveUser({ data, activeMembersEmail }: Props) {
     const router = useRouter();
 
+    const user = useOtherUser(data);
 
     let name = user?.name?.split(' ')[0]
     name = name && name.length > 7 ? `${name.slice(0, 7)}...` : name
@@ -22,7 +26,8 @@ export default function SingleActiveUser({ user }: Props) {
         router.push(`/conversations/${user.id}`)
     }, [user.id, router])
 
-    if (!user || !user?.name) return null;
+    if (!user || !user?.name || !user?.email) return null
+    if (!activeMembersEmail.includes(user.email)) return null;
 
     return (
         <div className="flex flex-col items-center justify-center gap-1 cursor-pointer" role="button" onClick={() => handleClick()} title={user.name}>
