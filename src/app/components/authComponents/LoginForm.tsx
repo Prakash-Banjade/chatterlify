@@ -73,8 +73,6 @@ export default function LoginForm({ className, ...props }: LoginFormProps) {
         try {
             const res = await signIn(action, { redirect: false });
 
-            console.log("res", res);
-
             if (res?.ok && res?.status === 200) {
                 router.push('users')
             }
@@ -108,7 +106,7 @@ export default function LoginForm({ className, ...props }: LoginFormProps) {
                             <FormItem>
                                 <FormLabel>Email</FormLabel>
                                 <FormControl>
-                                    <Input placeholder="Your email" {...field} type="email" required />
+                                    <Input placeholder="Your email" {...field} type="email" required disabled={loading || socialLoading} />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -121,7 +119,7 @@ export default function LoginForm({ className, ...props }: LoginFormProps) {
                             <FormItem>
                                 <FormLabel>Password</FormLabel>
                                 <FormControl>
-                                    <Input placeholder="********" {...field} type="password" required />
+                                    <Input placeholder="********" {...field} type="password" required disabled={loading || socialLoading} />
                                 </FormControl>
                                 {/* <FormDescription className="flex items-center gap-1.5 mt-10">
                                     <Checkbox id="remember" />
@@ -132,7 +130,7 @@ export default function LoginForm({ className, ...props }: LoginFormProps) {
                         )}
                     />
 
-                    <Button type="submit" className="w-full" aria-disabled={loading} disabled={loading}>
+                    <Button type="submit" className="w-full" aria-disabled={loading || socialLoading} disabled={loading || socialLoading}>
                         {loading ? (
                             <>
                                 <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
@@ -174,8 +172,8 @@ export default function LoginForm({ className, ...props }: LoginFormProps) {
             <section className="flex gap-3 items-center justify-center">
                 <Button variant="outline" type="button" className="grow" title="Continue with GitHub"
                     onClick={() => socialLogin('github')}
-                    aria-disabled={socialLoading}
-                    disabled={socialLoading}
+                    aria-disabled={socialLoading || loading}
+                    disabled={socialLoading || loading}
                 >
                     {false ? (
                         <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
@@ -186,8 +184,8 @@ export default function LoginForm({ className, ...props }: LoginFormProps) {
                 </Button>
                 <Button variant="outline" type="button" className="grow" title="Continue with Google"
                     onClick={() => socialLogin('google')}
-                    aria-disabled={socialLoading}
-                    disabled={socialLoading}
+                    aria-disabled={socialLoading || loading}
+                    disabled={socialLoading || loading}
                 >
                     {false ? (
                         <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
