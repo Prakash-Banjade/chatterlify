@@ -1,5 +1,4 @@
 import { withAuth, NextRequestWithAuth } from 'next-auth/middleware'
-import { NextResponse } from 'next/server';
 
 export default withAuth(
     function middleware(req: NextRequestWithAuth) {
@@ -16,4 +15,4 @@ export default withAuth(
 )
 
 
-export const config = { matcher: ["/users/:path*", "/conversations/:path*"] }
+export const config = { matcher: ["/users/:path*", "/conversations/:path*", '/settings/:path*'] }
