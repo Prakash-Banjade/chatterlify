@@ -48,7 +48,7 @@ export default function RegisterForm({ className, ...props }: LoginFormProps) {
         setLoading(true);
 
         try {
-            const res = await fetch(`${process.env.FRONTEND_URL!}/api/register`, {
+            const res = await fetch(`/api/register`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
