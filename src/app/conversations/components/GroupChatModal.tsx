@@ -68,7 +68,7 @@ export default function GroupChatModal({ users }: Props) {
         setIsLoading(true);
 
         const { groupName: name, members } = values;
-        
+
         try {
             const res = await fetch(`/api/conversations`, {
                 method: 'POST',
@@ -168,7 +168,7 @@ export default function GroupChatModal({ users }: Props) {
                         <DialogClose asChild>
                             <Button variant="outline" type="button">Cancel</Button>
                         </DialogClose>
-                        <Button type="submit" className="disabled:cursor-not-allowed" disabled={isLoading || (members.length < 2)}>
+                        <Button type="submit" className="disabled:cursor-not-allowed" disabled={isLoading || (members.length < 2)} onClick={() => onSubmit({ groupName: form.getValues('groupName'), members: form.getValues('members') })}>
                             {isLoading ? (
                                 <>
                                     <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
