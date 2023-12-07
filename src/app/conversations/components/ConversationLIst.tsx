@@ -13,24 +13,30 @@ import { pusherClient } from "@/lib/pusher";
 import { find } from "lodash";
 import UserFilterBox from "@/app/components/UserFilterBox";
 import ActiveUsers from "./activeUsersDisplay/ActiveUsers";
+import useAudio from "@/hooks/useAudio";
 
 type Props = {
     initialItems: FullConversation[],
     users: User[] | null,
+    currentUser?: User,
 }
 
-export default function ConversationLIst({ initialItems, users }: Props) {
+export default function ConversationLIst({ initialItems, users, currentUser }: Props) {
 
     const [items, setItems] = useState(initialItems);
     const [query, setQuery] = useState('')
     const session = useSession();
     const router = useRouter();
 
+
     const { conversationId, isOpen } = useConversation();
 
     const pusherKey = useMemo(() => {
         return session.data?.user?.email;
     }, [session.data?.user?.email])
+
+    // message audio
+    const { play: playNewMsg } = useAudio('/audios/new_message.mp3')
 
     useEffect(() => {
         if (!pusherKey) return;
@@ -43,6 +49,7 @@ export default function ConversationLIst({ initialItems, users }: Props) {
 
                 return [conversation, ...prev]
             });
+            playNewMsg();
         }
 
         const updateConversationHanlder = (conversation: FullConversation) => {
@@ -58,6 +65,13 @@ export default function ConversationLIst({ initialItems, users }: Props) {
 
                 return currentConversation;
             }));
+
+            // if (!items.some(con => con.messages.some(msg => msg.id === newMessage.id))) { // checking if new message: current message is not in the body
+            //     // console.log('new message')
+            //     if (conversationId !== conversation.id && newMessage.sender.id !== currentUser?.id) {
+            //         playNewMsg();
+            //     }
+            // }
         }
 
         const removeHandler = (conversation: FullConversation) => {

@@ -60,14 +60,15 @@ export async function POST(req: NextRequest) {
         })
 
         await pusherServer.trigger(conversationId, 'messages:new', newMessage);
-        const lastMessage = updatedConversation.messages[updatedConversation.messages.length - 1]; 
+        const lastMessage = updatedConversation.messages[updatedConversation.messages.length - 1];
 
         updatedConversation.users.map(user => {
             // if (user?.email && lastMessage) {
-                pusherServer.trigger(user.email!, 'conversation:update', {
-                    id: conversationId,
-                    messages: [lastMessage],
-                })
+            pusherServer.trigger(user.email!, 'conversation:update', {
+                id: conversationId,
+                messages: [lastMessage],
+            })
+            console.log('msg sent to: ', user.name)
             // }
         })
 

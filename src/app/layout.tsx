@@ -6,6 +6,7 @@ import { Toaster } from "@/components/ui/toaster"
 import AuthProvider from '@/context/AuthProvider'
 import NextTopLoader from 'nextjs-toploader';
 import ActiveStatus from './components/ActiveStatus'
+import { ActionHandler } from './action-handler'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -29,6 +30,7 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <AuthProvider>
+            <ActionHandler />
             <NextTopLoader />
             <ActiveStatus />
             {children}

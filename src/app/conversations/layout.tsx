@@ -3,6 +3,7 @@ import Sidebar from "../components/sidebar/Sidebar";
 import ConversationLIst from "./components/ConversationLIst";
 import getUsers from "@/lib/actions/getUsers";
 import { Metadata } from "next";
+import getCurrentUser from "@/lib/actions/getCurrentUser";
 
 export const metadata: Metadata = {
     title: `Conversation | ${process.env.APP_NAME}`,
@@ -17,6 +18,7 @@ export default async function ConversationsLayout({
 
     const conversations = await getConversations();
     const users = await getUsers();
+    const currentUser = await getCurrentUser();
 
     return (
         <Sidebar>
@@ -24,7 +26,7 @@ export default async function ConversationsLayout({
                 <ConversationLIst
                     initialItems={conversations}
                     users={users}
-
+                    currentUser={currentUser!}
                 />
                 {children}
             </div>
