@@ -14,7 +14,7 @@ export default async function SettingsAccountPage() {
   const currentUser = await getCurrentUser();
 
   if (!currentUser?.email || !currentUser?.id) {
-    return null;
+    return null
   }
 
   return (
