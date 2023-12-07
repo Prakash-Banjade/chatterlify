@@ -1,28 +1,32 @@
 // useAudio.ts
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useRef } from 'react';
 
 interface AudioHook {
     play: () => void;
 }
 
 const useAudio = (audioFile: string): AudioHook => {
-    const audio = new Audio(audioFile);
+    const audio = useRef<HTMLAudioElement | undefined>(
+        typeof Audio !== "undefined" ? new Audio(audioFile) : undefined
+    );
 
     useEffect(() => {
-        audio.load();
+        audio?.current?.load();
         return () => {
             // Pause and reset audio
-            audio.pause();
-            audio.currentTime = 0;
+            if (audio.current) {
+                audio.current.pause();
+                audio.current.currentTime = 0;
 
-            // Unload audio
-            audio.src = '';
+                // Unload audio
+                audio.current.src = '';
+            }
         };
     }, []);
 
     const play = useCallback(() => {
-        audio.play();
-    }, []);
+        audio?.current?.play();
+    }, [audio]);
 
     return { play };
 };
