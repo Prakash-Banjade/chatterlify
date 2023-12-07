@@ -13,7 +13,9 @@ export default async function SettingsAccountPage() {
 
   const currentUser = await getCurrentUser();
 
-  if (!currentUser?.email || !currentUser?.id) throw new Error('Unauthorized. Login to continue')
+  if (!currentUser?.email || !currentUser?.id) {
+    return null
+  }
 
   return (
     <div className="space-y-12">
