@@ -1,28 +1,37 @@
 // useAudio.ts
-import { useCallback, useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 
 interface AudioHook {
     play: () => void;
 }
 
 const useAudio = (audioFile: string): AudioHook => {
-    const audio = new Audio(audioFile);
+    const audioRef = useRef<HTMLAudioElement | null>(null);
 
     useEffect(() => {
-        audio.load();
+        if (typeof window !== 'undefined') {
+            // Initialize audio only on the client side
+            audioRef.current = new Audio(audioFile);
+            audioRef.current.load();
+        }
+
+        // Cleanup function
         return () => {
-            // Pause and reset audio
-            audio.pause();
-            audio.currentTime = 0;
+            if (audioRef.current) {
+                audioRef.current.pause();
+                audioRef.current.currentTime = 0;
+                audioRef.current.src = '';
+            }
 
-            // Unload audio
-            audio.src = '';
+            // Additional cleanup if needed
         };
-    }, []);
+    }, [audioFile]); // Include audioFile as a dependency if it changes
 
-    const play = useCallback(() => {
-        audio.play();
-    }, []);
+    const play = () => {
+        if (audioRef.current) {
+            audioRef.current.play();
+        }
+    };
 
     return { play };
 };

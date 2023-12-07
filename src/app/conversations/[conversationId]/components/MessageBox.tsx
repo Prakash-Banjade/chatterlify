@@ -66,7 +66,7 @@ export default function MessageBox({ isLast, data }: Props) {
                                     height="288"
                                     width="288"
                                     src={data.image}
-                                    className="object-cover cursor-pointer hover:scale110 transition"
+                                    className="object-cover cursor-pointer hover:scale110 transition w-auto h-auto"
                                 />
                             </ImageModal>
                         ) : (

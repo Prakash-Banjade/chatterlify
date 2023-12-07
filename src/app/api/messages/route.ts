@@ -68,7 +68,6 @@ export async function POST(req: NextRequest) {
                 id: conversationId,
                 messages: [lastMessage],
             })
-            console.log('msg sent to: ', user.name)
             // }
         })
 
