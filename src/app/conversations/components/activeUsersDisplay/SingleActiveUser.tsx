@@ -23,11 +23,11 @@ export default function SingleActiveUser({ data, activeMembersEmail }: Props) {
     name = name && name.length > 7 ? `${name.slice(0, 7)}...` : name
 
     const handleClick = useCallback(() => {
-        router.push(`/conversations/${user.id}`)
+        router.push(`/conversations/${data.id}`)
     }, [user.id, router])
 
-    if (!user || !user?.name || !user?.email) return null
-    if (!activeMembersEmail.includes(user.email)) return null;
+    if (!user || !user?.name || !user?.email || data.isGroup || !activeMembersEmail.includes(user.email)) return null
+    // if (!activeMembersEmail.includes(user.email)) return null;
 
     return (
         <div className="flex flex-col items-center justify-center gap-1 cursor-pointer" role="button" onClick={() => handleClick()} title={user.name}>
