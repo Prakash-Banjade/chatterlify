@@ -6,17 +6,18 @@ import { pusherClient } from "@/lib/pusher";
 import { useSession } from "next-auth/react";
 import { useEffect, useMemo } from "react";
 import { FullConversation, FullMessage } from "../../types";
-import { usePathname, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useToast } from "@/components/ui/use-toast";
 import { ToastAction } from "@/components/ui/toast";
+import { useCurrentConversations } from "@/context/ConversationsProvider";
 
 
 export const ActionHandler = () => {
 
     const session = useSession();
+    const { items } = useCurrentConversations();
     const { conversationId, isOpen } = useConversation();
     const { toast } = useToast();
-    const pathname = usePathname();
     const { play: playNewMsg } = useAudio('/audios/new_message.mp3')
 
 
@@ -37,14 +38,18 @@ export const ActionHandler = () => {
         }
 
         const updateConversationHanlder = (conversation: FullConversation) => {
-            if (!conversation.messages || conversationId === conversation.id) return;
+            if (!conversation.messages || isOpen) return;
             const message = conversation.messages[0];
             if (message.sender.email === pusherKey) return;
+            console.log('triggered')
             playNewMsg();
             toast({
                 title: message.sender.name || '',
                 description: message.image ? 'Sent an image' : (message.body && message.body.length > 40) ? `${message.body.slice(0, 40)}...` : message.body,
-                action: <ToastAction altText="View" onClick={() => router.push(`/conversations/${conversation.id}`)}>View</ToastAction>
+                action: <ToastAction altText="View" onClick={() => {
+                    router.push(`/conversations/${conversation.id}`)
+                    router.refresh();
+                }}>View</ToastAction>
             })
         }
 
@@ -69,7 +74,7 @@ export const ActionHandler = () => {
             pusherClient.unbind('messages:new', newMessageHandler)
             pusherClient.unbind('message:update', updateMessageHandler);
         }
-    }, [pusherKey, conversationId, router, pathname])
+    }, [pusherKey, items])
 
 
     return null;

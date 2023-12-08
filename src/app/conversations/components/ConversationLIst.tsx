@@ -14,6 +14,7 @@ import { find } from "lodash";
 import UserFilterBox from "@/app/components/UserFilterBox";
 import ActiveUsers from "./activeUsersDisplay/ActiveUsers";
 import useAudio from "@/hooks/useAudio";
+import { useCurrentConversations } from "@/context/ConversationsProvider";
 
 type Props = {
     initialItems: FullConversation[],
@@ -23,7 +24,9 @@ type Props = {
 
 export default function ConversationLIst({ initialItems, users, currentUser }: Props) {
 
-    const [items, setItems] = useState(initialItems);
+    // const [items, setItems] = useState(initialItems);
+    const {items, setItems} = useCurrentConversations();
+    
     const [query, setQuery] = useState('')
     const session = useSession();
     const router = useRouter();

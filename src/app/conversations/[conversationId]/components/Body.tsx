@@ -11,6 +11,7 @@ import { useSession } from "next-auth/react";
 import Avatar from "@/app/components/Avatar";
 import useOtherUser from "@/hooks/useOtherUser";
 import useAudio from "@/hooks/useAudio";
+import { ChatBubbleIcon } from "@radix-ui/react-icons";
 
 type Props = {
     initialMessages: FullMessage[],
@@ -88,6 +89,15 @@ export default function Body({ initialMessages, currentUser }: Props) {
         }
 
     }, [conversationId])
+
+    if (!initialMessages.length) {
+        return (
+            <div className="flex-1 items-center flex justify-center flex-col gap-5">
+                <ChatBubbleIcon className="text-muted-foreground h-20 w-20 sm:h-28 sm:w-28 opacity-50" />
+                <p className="text-muted-foreground lg:text-2xl text-xl">No chats here yet...</p>
+            </div>
+        )
+    }
 
     return (
         <div className="flex-1 overflow-y-auto">

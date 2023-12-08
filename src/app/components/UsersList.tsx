@@ -3,17 +3,17 @@
 import { User } from "@prisma/client";
 import UserBox from "./UserBox";
 import UserFilterBox from "./UserFilterBox";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 
 export default function UsersList({ users }: { users: User[] | null }) {
 
     const [query, setQuery] = useState('')
 
 
-    const filteredUsers = (users: User[] | null): User[] | null => {
+    const filteredUsers = useCallback((users: User[] | null): User[] | null => {
         if (!users) return null;
         return users.filter(user => user?.name?.toLowerCase().includes(query.toLocaleLowerCase()))
-    }
+    }, [query])
 
 
     return (

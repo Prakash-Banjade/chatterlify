@@ -7,6 +7,8 @@ import AuthProvider from '@/context/AuthProvider'
 import NextTopLoader from 'nextjs-toploader';
 import ActiveStatus from './components/ActiveStatus'
 import { ActionHandler } from './action-handler'
+import CurrentConversationProvider from '@/context/ConversationsProvider'
+import getConversations from '@/lib/actions/getConversations'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -15,11 +17,16 @@ export const metadata: Metadata = {
   description: 'Chat with your connections',
 }
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode
 }) {
+
+  const conversations = await getConversations();
+
+
+
   return (
     <html lang="en">
       <body className={inter.className}>
@@ -29,13 +36,15 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <AuthProvider>
-            <ActionHandler />
-            <NextTopLoader />
-            <ActiveStatus />
-            {children}
-          </AuthProvider>
-          <Toaster />
+          <CurrentConversationProvider initialItems={conversations}>
+            <AuthProvider>
+              <ActionHandler />
+              <NextTopLoader />
+              <ActiveStatus />
+              {children}
+            </AuthProvider>
+            <Toaster />
+          </CurrentConversationProvider>
         </ThemeProvider>
       </body>
     </html>

@@ -24,6 +24,7 @@ export default function SingleActiveUser({ data, activeMembersEmail }: Props) {
 
     const handleClick = useCallback(() => {
         router.push(`/conversations/${data.id}`)
+        router.refresh();
     }, [user.id, router])
 
     if (!user || !user?.name || !user?.email || data.isGroup || !activeMembersEmail.includes(user.email)) return null
