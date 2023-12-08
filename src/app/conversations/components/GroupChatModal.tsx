@@ -111,7 +111,6 @@ export default function GroupChatModal({ users }: Props) {
         } else {
             form.setValue('members', [...members, { id, name, image, email }], { shouldValidate: true })
         }
-        console.log(members);
     }
 
     const filteredUsers = (users: User[] | null): User[] => {

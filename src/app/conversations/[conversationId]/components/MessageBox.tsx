@@ -13,7 +13,6 @@ type Props = {
 
 export default function MessageBox({ isLast, data }: Props) {
 
-    // console.log('isLastSeenMessage: ', isLastSeenMessage)
 
     const session = useSession();
 

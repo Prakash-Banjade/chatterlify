@@ -33,10 +33,6 @@ export default function ConversationBox({ data, selected }: Props) {
         return messages[messages.length - 1]
     }, [data.messages])
 
-    // useEffect(() => {
-    //     console.log('lastMessage: ', data)
-    // }, [data])
-
     const userEmail = useMemo(() => {
         return session?.data?.user?.email;
     }, [session?.data?.user?.email])

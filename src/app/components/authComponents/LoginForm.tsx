@@ -64,8 +64,6 @@ export default function LoginForm({ className, ...props }: LoginFormProps) {
         } finally {
             setLoading(false)
         }
-
-        // console.log(values);
     }
 
     const socialLogin = async (action: string) => {

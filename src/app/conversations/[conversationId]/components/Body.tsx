@@ -64,7 +64,6 @@ export default function Body({ initialMessages, currentUser }: Props) {
 
         let timeOut: NodeJS.Timeout;
         const typingMessageHandler = (user: User) => {
-            console.log(user?.email, currentUser?.email)
             if (user && user?.email !== currentUser?.email && conversationId) {
                 setTypingUser(user)
                 typingPlay(); // typing sound

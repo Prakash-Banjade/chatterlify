@@ -40,7 +40,6 @@ export const ActionHandler = () => {
             if (!conversation.messages || conversationId === conversation.id) return;
             const message = conversation.messages[0];
             if (message.sender.email === pusherKey) return;
-            // console.log('new conversation: ', conversation)
             playNewMsg();
             toast({
                 title: message.sender.name || '',

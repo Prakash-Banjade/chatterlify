@@ -38,11 +38,6 @@ export default function Form() {
                 })
             })
 
-            if (res.ok) {
-                const data = res.json();
-                console.log(data);
-            }
-
 
         } catch (e) {
             if (e instanceof Error) {

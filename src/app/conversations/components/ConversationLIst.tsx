@@ -65,13 +65,6 @@ export default function ConversationLIst({ initialItems, users, currentUser }: P
 
                 return currentConversation;
             }));
-
-            // if (!items.some(con => con.messages.some(msg => msg.id === newMessage.id))) { // checking if new message: current message is not in the body
-            //     // console.log('new message')
-            //     if (conversationId !== conversation.id && newMessage.sender.id !== currentUser?.id) {
-            //         playNewMsg();
-            //     }
-            // }
         }
 
         const removeHandler = (conversation: FullConversation) => {
