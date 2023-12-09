@@ -70,10 +70,10 @@ PUSHER_SECRET=
 
 ## Get started with the technologies
 
-`Next.js`: https://nextjs.org/
-`Shadcn-ui`: https://ui.shadcn.com/
-`MongoDB`: https://mongodb.com/
-`PrismaORM`: https://www.prisma.io/
-`Next-auth`: https://next-auth.js.org/
-`Pusher`: https://pusher.com/
-`Zod`: https://zod.dev/
+`Next.js`: https://nextjs.org/  
+`Shadcn-ui`: https://ui.shadcn.com/  
+`MongoDB`: https://mongodb.com/  
+`PrismaORM`: https://www.prisma.io/  
+`Next-auth`: https://next-auth.js.org/  
+`Pusher`: https://pusher.com/  
+`Zod`: https://zod.dev/  
