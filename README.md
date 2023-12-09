@@ -16,7 +16,25 @@
 ### 1. `Next.js` for frontend & backend
 ### 2. `Shadcn-UI` for ui building
 ### 3. `MongoDB` for database
-### 4. `Prisma` ORM for type safe and auto generated query builder
+### 4. `Prisma ORM` for type safe and auto generated query builder
 ### 5. `Next-auth` for authentication
 ### 6. `Pusher` for real time updates
 ### 7. `Zod` for validation
+
+## Getting Started
+
+```bash
+# Clone the repository
+git clone https://github.com/your-username/your-repo.git
+
+# Install dependencies
+cd your-repo
+npm install
+
+# Set up environment variables
+cp .env.example .env
+# Update .env with your configuration
+
+# Run the app
+npm run dev
+```
