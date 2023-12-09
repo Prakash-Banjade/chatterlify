@@ -5,15 +5,16 @@ import Avatar from "@/app/components/Avatar";
 import { format } from "date-fns";
 import Image from "next/image";
 import ImageModal from "./ImageModal";
+import ReactionsDisplay from "./messageActions/ReactionsDisplay";
+import SideActionBtns from "./messageActions/SideActionBtns";
 
 type Props = {
     isLast?: boolean,
     data: FullMessage,
+    setMessages: React.Dispatch<React.SetStateAction<FullMessage[]>>,
 }
 
-export default function MessageBox({ isLast, data }: Props) {
-
-
+export default function MessageBox({ isLast, data, setMessages }: Props) {
     const session = useSession();
 
     const isOwn = session?.data?.user?.email === data?.sender?.email;
@@ -23,20 +24,20 @@ export default function MessageBox({ isLast, data }: Props) {
         .join(', ')
 
     const container = clsx(
-        "flex gap-3 p-4",
+        "flex gap-3 p-4 select-none",
         isOwn && 'justify-end'
     )
 
     const avatar = clsx(isOwn && "order-2")
 
     const body = clsx(
-        "flex flex-col gap-2",
+        "flex flex-col gap-2 group",
         isOwn && 'items-end',
         !data.image && 'flex-1 max-w-full',
     )
 
     const message = clsx(
-        "text-sm w-fit overflow-hidden",
+        "text-sm w-fit relative select-none",
         isOwn ? 'bg-sky-600 text-white' : 'bg-backgroundSecondary',
         data.image ? 'rounded-md p-0' : isOwn ? 'rounded-[20px] rounded-tr-md py-2 px-3 max-w-[80%]' : 'rounded-[20px] rounded-tl-md py-2 px-3 max-w-[80%]'
     )
@@ -56,26 +57,30 @@ export default function MessageBox({ isLast, data }: Props) {
                         {format(new Date(data?.createdAt), 'p')}
                     </div>
                 </div>
-                <div className={message}>
-                    {
-                        data?.image ? (
-                            <ImageModal src={data.image}>
-                                <Image
-                                    alt="Image"
-                                    height="288"
-                                    width="288"
-                                    src={data.image}
-                                    className="object-cover cursor-pointer hover:scale110 transition w-auto h-auto"
-                                />
-                            </ImageModal>
-                        ) : (
-                            <div className="w-full whitespace-normal break-words">{data?.body}</div>
-                        )
-                    }
+                <div className="flex items-center gap-3 group">
+                    <SideActionBtns message={data} isOwn={isOwn} setMessages={setMessages} />
+                    <div className={message}>
+                        {
+                            data?.image ? (
+                                <ImageModal src={data.image}>
+                                    <Image
+                                        alt="Image"
+                                        height="288"
+                                        width="288"
+                                        src={data.image}
+                                        className="object-cover cursor-pointer hover:scale110 transition w-auto h-auto"
+                                    />
+                                </ImageModal>
+                            ) : (
+                                <div className="w-full whitespace-normal break-words">{data?.body}</div>
+                            )
+                        }
+                        <ReactionsDisplay message={data} isOwn={isOwn} currentUserEmail={session?.data?.user?.email} />
+                    </div>
                 </div>
                 {
                     (isLast && isOwn && seenList.length > 0) && (
-                        <div className="text-xs font-light text-muted-foreground">Seen by <span className="font-medium">{seenList}</span></div>
+                        <div className="text-xs font-light mt-5 text-muted-foreground">Seen by <span className="font-medium">{seenList}</span></div>
                     )
                 }
             </div>

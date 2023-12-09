@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect, useRef, useState } from "react";
-import { FullMessage } from "../../../../../types"
+import { FullMessage, FullReaction } from "../../../../../types"
 import useConversation from "@/hooks/useConversation";
 import MessageBox from "./MessageBox";
 import { pusherClient } from "@/lib/pusher";
@@ -75,16 +75,30 @@ export default function Body({ initialMessages, currentUser }: Props) {
             }
         }
 
+        const reactionHandler = ({ messageId, reactions }: { messageId: string, reactions: FullReaction[] }) => {
+            setMessages(prev => prev.map(message => {
+                return message.id === messageId ? {
+                    ...message,
+                    reactions,
+                } : message;
+            }))
+
+            console.log(reactions);
+            console.log('new reaction added')
+        }
+
         // listen for new messages
         pusherClient.bind('messages:new', newMessageHandler)
         pusherClient.bind('message:update', updateMessageHandler);
         pusherClient.bind('message:typing', typingMessageHandler)
+        pusherClient.bind('messages:reaction', reactionHandler)
 
         return () => {
             pusherClient.unsubscribe(conversationId)
             pusherClient.unbind('messages:new', newMessageHandler)
             pusherClient.unbind('message:update', updateMessageHandler);
             pusherClient.unbind('message:typing', typingMessageHandler)
+            pusherClient.unbind('messages:reaction', reactionHandler)
             clearTimeout(timeOut)
         }
 
@@ -109,13 +123,14 @@ export default function Body({ initialMessages, currentUser }: Props) {
                             key={message.id}
                             isLast={i === messages.length - 1}
                             data={message}
+                            setMessages={setMessages}
                         />
                     )
                 })
             }
             {typingUser && <div className="activity flex gap-3 p-4 items-center">
                 <Avatar user={typingUser} />
-                <p className="text-muted-foreground text-sm">
+                <p className="text-muted-foreground text-sm rounded-[20px] rounded-tl-md py-2 px-3 bg-backgroundSecondary">
                     typing...
                 </p>
             </div>}

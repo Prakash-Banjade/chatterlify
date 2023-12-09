@@ -9,6 +9,11 @@ export default async function getMessages(conversationId: string) {
             include: {
                 sender: true,
                 seen: true,
+                reactions: {
+                    include: {
+                        user: true
+                    }
+                }
             },
             orderBy: {
                 createdAt: 'asc',
@@ -16,7 +21,7 @@ export default async function getMessages(conversationId: string) {
         })
 
         return messages;
-        
+
     } catch (e) {
         if (e instanceof Error) {
             console.log(e.message)
