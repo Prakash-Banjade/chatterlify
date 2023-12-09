@@ -7,14 +7,16 @@ import Image from "next/image";
 import ImageModal from "./ImageModal";
 import ReactionsDisplay from "./messageActions/ReactionsDisplay";
 import SideActionBtns from "./messageActions/SideActionBtns";
+import { User } from "@prisma/client";
 
 type Props = {
     isLast?: boolean,
     data: FullMessage,
     setMessages: React.Dispatch<React.SetStateAction<FullMessage[]>>,
+    currentUser: User,
 }
 
-export default function MessageBox({ isLast, data, setMessages }: Props) {
+export default function MessageBox({ isLast, data, setMessages, currentUser }: Props) {
     const session = useSession();
 
     const isOwn = session?.data?.user?.email === data?.sender?.email;
@@ -58,7 +60,7 @@ export default function MessageBox({ isLast, data, setMessages }: Props) {
                     </div>
                 </div>
                 <div className="flex items-center gap-3 group">
-                    <SideActionBtns message={data} isOwn={isOwn} setMessages={setMessages} />
+                    <SideActionBtns message={data} isOwn={isOwn} setMessages={setMessages} currentUser={currentUser} />
                     <div className={message}>
                         {
                             data?.image ? (
@@ -75,7 +77,7 @@ export default function MessageBox({ isLast, data, setMessages }: Props) {
                                 <div className="w-full whitespace-normal break-words">{data?.body}</div>
                             )
                         }
-                        <ReactionsDisplay message={data} isOwn={isOwn} currentUserEmail={session?.data?.user?.email} />
+                        <ReactionsDisplay message={data} isOwn={isOwn} currentUser={currentUser} setMessages={setMessages} />
                     </div>
                 </div>
                 {

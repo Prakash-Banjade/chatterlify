@@ -124,6 +124,7 @@ export default function Body({ initialMessages, currentUser }: Props) {
                             isLast={i === messages.length - 1}
                             data={message}
                             setMessages={setMessages}
+                            currentUser={currentUser}
                         />
                     )
                 })

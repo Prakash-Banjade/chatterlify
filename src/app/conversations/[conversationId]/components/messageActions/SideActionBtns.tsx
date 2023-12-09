@@ -10,12 +10,14 @@ import {
     TooltipProvider,
     TooltipTrigger,
 } from "@/components/ui/tooltip"
+import { User } from "@prisma/client";
 
 
 interface SideActionBtnsProps {
     message: FullMessage,
     isOwn: boolean,
     setMessages: React.Dispatch<React.SetStateAction<FullMessage[]>>,
+    currentUser: User,
 }
 
 function VerticalDots() {
@@ -53,12 +55,12 @@ function ReplyBtn() {
     )
 }
 
-export default function SideActionBtns({ message, setMessages, isOwn }: SideActionBtnsProps) {
+export default function SideActionBtns({ message, setMessages, isOwn, currentUser }: SideActionBtnsProps) {
     return (
         <div className={clsx("items-center text-muted-foreground flex group-hover:opacity-100 group-hover:pointer-events-auto pointer-events-none opacity-0", !isOwn && "order-2 flex-row-reverse")}>
             <VerticalDots />
             <ReplyBtn />
-            <ReactionBtn message={message} setMessages={setMessages} />
+            <ReactionBtn message={message} setMessages={setMessages} currentUser={currentUser} />
         </div>
     )
 }

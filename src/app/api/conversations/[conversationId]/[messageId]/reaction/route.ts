@@ -125,3 +125,41 @@ export async function POST(req: NextRequest, { params }: { params: Params }) {
         return new NextResponse('Internal server error', { status: 500 })
     }
 }
+
+export async function DELETE(req: NextRequest, { params }: { params: Params }) {
+    try {
+        const currentUser = await getCurrentUser();
+        const { conversationId, messageId } = params;
+        const { reactionId } = await req.json();
+
+        if (!currentUser?.id || !currentUser?.email) return new NextResponse('Unauthorized', { status: 401 })
+        if (!conversationId) return new NextResponse('invalid conversation id', { status: 400 })
+
+        const reactionToDelete = await prisma.reaction.findUnique({
+            where: {
+                id: reactionId
+            }
+        })
+
+        if (!reactionToDelete) return new NextResponse('Invalid reaction ID', { status: 404 })
+
+        const deletedReaction = await prisma.reaction.deleteMany({
+            where: {
+                id: reactionId,
+                userId: currentUser.id,
+                messageId,
+            }
+        })
+
+        await pusherServer.trigger(conversationId, 'reaction:remove', {
+            reactionId: reactionToDelete.id,
+            messageId: reactionToDelete.messageId,
+        })
+
+        return NextResponse.json(deletedReaction);
+    } catch (e) {
+        console.error(e)
+        if (e instanceof Error) return new NextResponse(e.message, { status: 500 })
+        return new NextResponse('Internal server error', { status: 500 })
+    }
+}
