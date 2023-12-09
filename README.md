@@ -21,20 +21,59 @@
 ### 6. `Pusher` for real time updates
 ### 7. `Zod` for validation
 
+
 ## Getting Started
 
 ```bash
 # Clone the repository
-git clone https://github.com/your-username/your-repo.git
+https://github.com/Prakash-Banjade/chatterlify.git
+```
 
+```bash
 # Install dependencies
-cd your-repo
+cd chatterlify
 npm install
+```
 
+```bash
 # Set up environment variables
-cp .env.example .env
+.env.local .env
 # Update .env with your configuration
+```
 
+```bash
 # Run the app
 npm run dev
 ```
+
+## .env file configuration
+
+```bash
+APP_NAME=
+
+MONGO_URI=
+
+NEXTAUTH_SECRET=
+GITHUB_CLIENT_ID=
+GITHUB_SECRET=
+
+GOOGLE_CLIENT_ID=
+GOOGLE_SECRET=
+
+NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=
+
+NEXT_PUBLIC_PUSHER_APP_KEY=
+PUSHER_APP_ID=
+PUSHER_SECRET=
+```
+
+
+## Get started with the technologies
+
+`Next.js`: https://nextjs.org/
+`Shadcn-ui`: https://ui.shadcn.com/
+`MongoDB`: https://mongodb.com/
+`PrismaORM`: https://www.prisma.io/
+`Next-auth`: https://next-auth.js.org/
+`Pusher`: https://pusher.com/
+`Zod`: https://zod.dev/
