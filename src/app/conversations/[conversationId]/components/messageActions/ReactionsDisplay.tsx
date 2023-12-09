@@ -57,7 +57,7 @@ export default function ReactionsDisplay({ message, isOwn, currentUser, setMessa
             pusherClient.unsubscribe(conversationId);
             pusherClient.unbind('reaction:remove', removeHandler)
         }
-    }, [conversationId])
+    }, [conversationId, setMessages])
 
     if (!message?.reactions?.length) return null;
     

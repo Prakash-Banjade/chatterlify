@@ -79,7 +79,7 @@ export default function ReactionBtn({ message, setMessages, currentUser }: Props
         if (open) {
             boxOpen();
         }
-    }, [open])
+    }, [open, boxOpen])
 
     const actionBtn = (
         <TooltipProvider>
