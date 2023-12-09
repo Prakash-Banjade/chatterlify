@@ -9,7 +9,9 @@
 ### 5. Reacting on messages, removing reactions
 ### 6. Displaying the active status
 ### 7. Managing accoung, profile, appearances
-### 8. More to come...
+### 8. More to come...  
+
+
 
 ## The tech-stacks used:
 
@@ -19,7 +21,8 @@
 ### 4. `Prisma ORM` for type safe and auto generated query builder
 ### 5. `Next-auth` for authentication
 ### 6. `Pusher` for real time updates
-### 7. `Zod` for validation
+### 7. `Zod` for validation  
+
 
 
 ## Getting Started
@@ -65,7 +68,7 @@ NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME=
 NEXT_PUBLIC_PUSHER_APP_KEY=
 PUSHER_APP_ID=
 PUSHER_SECRET=
-```
+```  
 
 
 ## Get started with the technologies
