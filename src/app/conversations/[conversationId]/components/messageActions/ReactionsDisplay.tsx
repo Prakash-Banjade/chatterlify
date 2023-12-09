@@ -18,7 +18,6 @@ interface ReactionsDisplayProps {
 }
 
 export default function ReactionsDisplay({ message, isOwn, currentUser, setMessages }: ReactionsDisplayProps) {
-    if (!message?.reactions?.length) return null;
     const { conversationId } = useConversation()
 
     const handleDelete = async (reactionId: string, canDelete: boolean) => {
@@ -60,6 +59,8 @@ export default function ReactionsDisplay({ message, isOwn, currentUser, setMessa
         }
     }, [conversationId])
 
+    if (!message?.reactions?.length) return null;
+    
     return (
         <Dialog>
             <DialogTrigger asChild>
