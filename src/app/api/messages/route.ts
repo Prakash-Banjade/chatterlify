@@ -77,3 +77,46 @@ export async function POST(req: NextRequest) {
         return new NextResponse('Internal Server Error', { status: 500 })
     }
 }
+
+export async function DELETE(req: NextRequest) {
+    try {
+        const currentUser = await getCurrentUser();
+        const { messageId, conversationId } = await req.json();
+
+        if (!currentUser?.id || !currentUser?.email) return new NextResponse('Unauthorized', { status: 401 })
+        if (!messageId || !conversationId) return new NextResponse('messageId & conversationId are required', { status: 400 })
+
+        const messageToDelete = await prisma.message.findUnique({
+            where: {
+                id: messageId
+            }
+        })
+
+        if (!messageToDelete) return new NextResponse('Message not found', { status: 404 })
+        if (messageToDelete.senderId !== currentUser.id) return new NextResponse('Unauthorized', { status: 401 })
+
+        const deletedMessage = await prisma.message.delete({
+            where: {
+                id: messageId,
+            },
+            include: {
+                sender: true,
+                seen: true,
+                reactions: {
+                    include: {
+                        user: true,
+                    }
+                }
+            }
+        });
+
+        await pusherServer.trigger(conversationId, 'messages:delete', deletedMessage.id);
+
+        return NextResponse.json(deletedMessage)
+
+    } catch (e) {
+        console.log(e)
+        if (e instanceof Error) return new NextResponse(e.message, { status: 500 })
+        return new NextResponse('Internal Server Error', { status: 500 })
+    }
+}

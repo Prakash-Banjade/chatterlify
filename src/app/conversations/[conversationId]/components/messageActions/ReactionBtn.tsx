@@ -45,19 +45,23 @@ export default function ReactionBtn({ message, setMessages, currentUser }: Props
         setOpen(false);
         reactionSound();
         // instantly adding reaction which will be later reset by pusher event
-        const newReaction: FullReaction = {
-            id: uuidv4(),
-            userId: currentUser.id,
-            user: currentUser,
-            reaction: key,
-            messageId: message.id
+        try {
+            const newReaction: FullReaction = {
+                id: uuidv4(),
+                userId: currentUser.id,
+                user: currentUser,
+                reaction: key,
+                messageId: message.id
+            }
+            setMessages(prev => prev.map(msg => {
+                return msg.id === message.id ? {
+                    ...msg,
+                    reactions: Array.isArray(message.reactions) ? [...msg?.reactions?.filter(r => r.userId !== currentUser.id), newReaction] : [],
+                } : msg;
+            }))
+        } catch (e) {
+            console.log(e);
         }
-        setMessages(prev => prev.map(msg => {
-            return msg.id === message.id ? {
-                ...msg,
-                reactions: [...msg?.reactions?.filter(r => r.userId !== currentUser.id), newReaction],
-            } : msg;
-        }))
 
         try {
             const res = await fetch(`/api/conversations/${conversationId}/${message.id}/reaction`, {
