@@ -10,11 +10,14 @@ import { SideActionBtnsProps } from "./SideActionBtns";
 import useConversation from "@/hooks/useConversation";
 import { useEffect } from "react";
 import { pusherClient } from "@/lib/pusher";
+import { useToast } from "@/components/ui/use-toast";
 
 interface VerticalDotsProps extends SideActionBtnsProps { }
 
-export default function VerticalDots({ message, setMessages, isOwn, currentUser }: VerticalDotsProps) {
+export default function VerticalDots({ message, setMessages, isOwn }: VerticalDotsProps) {
     const { conversationId } = useConversation();
+
+    const { toast } = useToast();
 
     const onRemove = async () => {
         if (!isOwn) return;
@@ -40,6 +43,22 @@ export default function VerticalDots({ message, setMessages, isOwn, currentUser 
         } catch (e) {
             console.log(e)
         }
+    }
+
+    const onCopy = () => {
+        if (!message.body) return;
+        navigator.clipboard.writeText(message.body)
+            .then(() => {
+                toast({
+                    title: 'Copied to clipboard',
+                })
+            })
+            .catch(err => {
+                toast({
+                    title: 'Error copying to clipboard',
+                    variant: 'destructive',
+                })
+            });
     }
 
     useEffect(() => {
@@ -71,7 +90,9 @@ export default function VerticalDots({ message, setMessages, isOwn, currentUser 
             </DropdownMenuTrigger>
             <DropdownMenuContent>
                 {isOwn && <DropdownMenuItem role="button" className="cursor-pointer" onClick={() => onRemove()}>Unsend</DropdownMenuItem>}
-                <DropdownMenuItem>Copy</DropdownMenuItem>
+                <DropdownMenuItem onClick={() => onCopy()} disabled={!!message.image} role="button" className="cursor-pointer disabled:cursor-not-allowed">
+                    Copy
+                </DropdownMenuItem>
             </DropdownMenuContent>
         </DropdownMenu>
 
