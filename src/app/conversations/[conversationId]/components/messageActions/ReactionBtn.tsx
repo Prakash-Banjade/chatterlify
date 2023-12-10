@@ -55,7 +55,7 @@ export default function ReactionBtn({ message, setMessages, currentUser }: Props
         setMessages(prev => prev.map(msg => {
             return msg.id === message.id ? {
                 ...msg,
-                reactions: [...msg.reactions.filter(r => r.userId !== currentUser.id), newReaction],
+                reactions: [...msg?.reactions?.filter(r => r.userId !== currentUser.id), newReaction],
             } : msg;
         }))
 

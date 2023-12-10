@@ -45,7 +45,7 @@ export default function ReactionsDisplay({ message, isOwn, currentUser, setMessa
 
         const removeHandler = ({ reactionId, messageId }: { reactionId: string, messageId: string }) => {
             setMessages(prev => {
-                return [...prev.map(msg => msg.id === messageId ? { ...msg, reactions: msg.reactions.filter(r => r.id !== reactionId) } : msg)]
+                return [...prev.map(msg => msg.id === messageId ? { ...msg, reactions: msg?.reactions?.filter(r => r.id !== reactionId) } : msg)]
             })
 
             console.log('removed')
