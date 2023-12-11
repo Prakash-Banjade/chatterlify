@@ -28,7 +28,7 @@ import { useToast } from "@/components/ui/use-toast"
 import { Icons } from "@/components/ui/icons"
 
 type Props = {
-    users: User[] | null
+    users: Partial<User>[] | null | undefined
 }
 
 const GroupFormSchema = z.object({
@@ -113,7 +113,7 @@ export default function GroupChatModal({ users }: Props) {
         }
     }
 
-    const filteredUsers = (users: User[] | null): User[] => {
+    const filteredUsers = (users: Partial<User>[] | null | undefined): Partial<User>[] => {
         if (!users) return []
         return users.filter(user => user.name?.toLocaleLowerCase()?.includes(searchText))
     }

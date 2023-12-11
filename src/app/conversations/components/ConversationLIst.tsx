@@ -15,7 +15,7 @@ import ActiveUsers from "./activeUsersDisplay/ActiveUsers";
 import { useCurrentConversations } from "@/context/ConversationsProvider";
 
 type Props = {
-    users: User[] | null,
+    users: Partial<User>[],
 }
 
 export default function ConversationLIst({ users }: Props) {

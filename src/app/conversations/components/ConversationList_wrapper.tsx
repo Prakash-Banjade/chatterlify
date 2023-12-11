@@ -2,9 +2,9 @@ import getUsers from "@/lib/actions/getUsers";
 import ConversationLIst from "./ConversationLIst";
 
 export default async function ConversationList_wrapper() {
-    const users = await getUsers()
+    const result = await getUsers()
 
     return (
-        <ConversationLIst users={users} />
+        <ConversationLIst users={result.users} />
     )
 }

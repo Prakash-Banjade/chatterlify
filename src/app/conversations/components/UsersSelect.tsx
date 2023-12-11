@@ -3,7 +3,7 @@ import { Checkbox } from "@/components/ui/checkbox"
 import { User } from "@prisma/client"
 
 type Props = {
-    users: User[] | null,
+    users: Partial<User>[] | null,
     selected: {
         image: string,
         id: string,
@@ -15,8 +15,8 @@ type Props = {
 
 export default function UsersSelect({ users, selected, setMembers }: Props) {
 
-    const handleSelect = (user: User) => {
-        setMembers(user.id, user.name!, user.image!, user.email!)
+    const handleSelect = (user: Partial<User>) => {
+        setMembers(user.id!, user.name!, user.image!, user.email!)
     }
 
     if (!users || !users.length) return (

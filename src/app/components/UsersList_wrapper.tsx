@@ -3,9 +3,9 @@ import UsersList from "./UsersList";
 
 export default async function UsersList_wrapper() {
 
-    const users = await getUsers();
+    const { users, hasNextPage } = await getUsers();
 
     return (
-        <UsersList users={users} />
+        <UsersList users={users} hasNextPage={hasNextPage} />
     )
 }

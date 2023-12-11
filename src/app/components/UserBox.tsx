@@ -8,7 +8,7 @@ import Avatar from "./Avatar";
 import { useToast } from "@/components/ui/use-toast";
 
 type Props = {
-    user: User
+    user: Partial<User>
 }
 
 export default function UserBox({ user }: Props) {
