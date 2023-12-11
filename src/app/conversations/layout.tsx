@@ -4,6 +4,9 @@ import ConversationLIst from "./components/ConversationLIst";
 import getUsers from "@/lib/actions/getUsers";
 import { Metadata } from "next";
 import getCurrentUser from "@/lib/actions/getCurrentUser";
+import ConversationList_wrapper from "./components/ConversationList_wrapper";
+import { Suspense } from "react";
+import UsersLoading from "../components/sidebar/UsersLoading";
 
 export const metadata: Metadata = {
     title: `Conversation | ${process.env.APP_NAME}`,
@@ -16,16 +19,12 @@ export default async function ConversationsLayout({
     children: React.ReactNode,
 }) {
 
-    const conversations = await getConversations();
-    const users = await getUsers();
-    const currentUser = await getCurrentUser();
-
     return (
         <Sidebar>
             <div className="lg:pl-20 h-full">
-                <ConversationLIst
-                    users={users}
-                />
+                <Suspense fallback={<UsersLoading variant="chats" />}>
+                    <ConversationList_wrapper />
+                </Suspense>
                 {children}
             </div>
         </Sidebar>
