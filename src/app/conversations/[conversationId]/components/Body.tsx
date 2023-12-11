@@ -114,7 +114,7 @@ export default function Body({ initialMessages, currentUser }: Props) {
     }
 
     return (
-        <div className="flex-1 overflow-y-auto">
+        <div className="flex-1 overflow-y-auto flex flex-col">
             {
                 messages?.map((message, i) => {
 
@@ -135,7 +135,7 @@ export default function Body({ initialMessages, currentUser }: Props) {
                     typing...
                 </p>
             </div>}
-            <div ref={bottomRef} className="mt-24 h-10" />
+            <div ref={bottomRef} className="mt-20" />
         </div>
     )
 }

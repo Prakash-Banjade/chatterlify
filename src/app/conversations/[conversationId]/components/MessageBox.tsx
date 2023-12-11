@@ -26,7 +26,7 @@ export default function MessageBox({ isLast, data, setMessages, currentUser }: P
         .join(', ')
 
     const container = clsx(
-        "flex gap-3 p-4 select-none",
+        "flex gap-3 p-4 select-none mt-auto",
         isOwn && 'justify-end'
     )
 
