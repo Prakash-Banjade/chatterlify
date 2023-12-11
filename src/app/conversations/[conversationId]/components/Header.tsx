@@ -12,7 +12,7 @@ import useActiveList from "@/hooks/useActiveList";
 
 type HeaderProps = {
     conversation: Conversation & {
-        users: User[]
+        users: Partial<User>[]
     }
 }
 

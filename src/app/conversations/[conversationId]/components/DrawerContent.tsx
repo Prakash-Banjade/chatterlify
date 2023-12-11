@@ -15,7 +15,7 @@ import useActiveList from '@/hooks/useActiveList';
 
 type Props = {
     data: Conversation & {
-        users: User[]
+        users: Partial<User>[]
     }
 }
 

@@ -3,7 +3,7 @@ import { useMemo } from "react";
 import { FullConversation } from "../../types";
 import { User } from "@prisma/client";
 
-export default function useOtherUser(conversation: FullConversation | { users: User[] }) {
+export default function useOtherUser(conversation: FullConversation | { users: Partial<User>[] }) {
     const session = useSession();
 
     const otherUser = useMemo(() => {

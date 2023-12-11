@@ -3,7 +3,7 @@ import Avatar from "./Avatar"
 import { cn } from "@/lib/utils"
 
 type Props = {
-    users: User[],
+    users: Partial<User>[],
     className?: string,
 }
 

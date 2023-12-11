@@ -13,7 +13,7 @@ import DrawerContent from "./DrawerContent"
 
 type Props = {
     data: Conversation & {
-        users: User[]
+        users: Partial<User>[]
     },
 }
 
