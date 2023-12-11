@@ -25,7 +25,7 @@ export default function DrawerContent({ data }: Props) {
     const { members } = useActiveList();
 
     const joinedDate = useMemo(() => {
-        return format(new Date(otherUser.createdAt), 'PP');
+        return format(new Date(otherUser.createdAt!), 'PP');
     }, [otherUser.createdAt])
 
     const title = useMemo(() => {

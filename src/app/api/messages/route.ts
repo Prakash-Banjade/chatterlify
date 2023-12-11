@@ -31,8 +31,30 @@ export async function POST(req: NextRequest) {
                 },
             },
             include: {
-                seen: true,
-                sender: true,
+                seen: {
+                    select: {
+                        id: true,
+                        name: true,
+                        email: true,
+                        image: true,
+                        bio: true,
+                        socialLinks: true,
+                        createdAt: true,
+                        updatedAt: true,
+                    }
+                },
+                sender: {
+                    select: {
+                        id: true,
+                        name: true,
+                        email: true,
+                        image: true,
+                        bio: true,
+                        socialLinks: true,
+                        createdAt: true,
+                        updatedAt: true,
+                    }
+                },
             }
         })
 
@@ -52,15 +74,37 @@ export async function POST(req: NextRequest) {
                 users: true,
                 messages: {
                     include: {
-                        seen: true,
-                        sender: true,
+                        seen: {
+                            select: {
+                                id: true,
+                                name: true,
+                                email: true,
+                                image: true,
+                                bio: true,
+                                socialLinks: true,
+                                createdAt: true,
+                                updatedAt: true,
+                            }
+                        },
+                        sender: {
+                            select: {
+                                id: true,
+                                name: true,
+                                email: true,
+                                image: true,
+                                bio: true,
+                                socialLinks: true,
+                                createdAt: true,
+                                updatedAt: true,
+                            }
+                        },
                     }
                 }
             }
         })
 
         await pusherServer.trigger(conversationId, 'messages:new', newMessage);
-        const lastMessage = updatedConversation.messages[updatedConversation.messages.length - 1];
+        const lastMessage = updatedConversation.messages.at(-1);
 
         updatedConversation.users.map(user => {
             // if (user?.email && lastMessage) {
@@ -104,7 +148,18 @@ export async function DELETE(req: NextRequest) {
                 seen: true,
                 reactions: {
                     include: {
-                        user: true,
+                        user: {
+                            select: {
+                                id: true,
+                                name: true,
+                                email: true,
+                                image: true,
+                                bio: true,
+                                socialLinks: true,
+                                createdAt: true,
+                                updatedAt: true,
+                            }
+                        },
                     }
                 }
             }

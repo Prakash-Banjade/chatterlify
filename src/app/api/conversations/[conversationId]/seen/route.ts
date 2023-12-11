@@ -1,7 +1,8 @@
 import getCurrentUser from "@/lib/actions/getCurrentUser";
 import { NextRequest, NextResponse } from "next/server";
-import prisma from "@/lib/prismadb";
 import { pusherServer } from "@/lib/pusher";
+import getConversationbyId from "@/lib/actions/getConversationById";
+import updateSingleMessage from "@/lib/actions/updateSingleMessage";
 
 type Params = {
     conversationId?: string
@@ -14,19 +15,8 @@ export async function POST(req: NextRequest, { params }: { params: Params }) {
 
         if (!currentUser?.id || !currentUser?.email) return new NextResponse('Unauthorized', { status: 401 })
 
-        const conversation = await prisma.conversation.findUnique({
-            where: {
-                id: conversationId,
-            },
-            include: {
-                messages: {
-                    include: {
-                        seen: true
-                    }
-                },
-                users: true,
-            },
-        })
+        if (!conversationId) return new NextResponse('conversation id required', { status: 400 })
+        const conversation = await getConversationbyId(conversationId);
 
         if (!conversation) return new NextResponse('Invalid conversatino ID', { status: 404 })
 
@@ -36,22 +26,15 @@ export async function POST(req: NextRequest, { params }: { params: Params }) {
         if (!lastMessage) return NextResponse.json(conversation)
 
         // update seen of last message
-        const updatedMessage = await prisma.message.update({
-            where: {
-                id: lastMessage.id,
-            },
-            data: {
-                seen: {
-                    connect: {
-                        id: currentUser.id,
-                    }
+        const data = {
+            seen: {
+                connect: {
+                    id: currentUser.id,
                 }
-            },
-            include: {
-                seen: true,
-                sender: true,
             }
-        })
+        }
+
+        const updatedMessage = await updateSingleMessage(lastMessage.id, data)
 
         await pusherServer.trigger(currentUser.email, 'conversation:update', {
             id: conversationId,

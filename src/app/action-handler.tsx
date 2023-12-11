@@ -40,10 +40,10 @@ export const ActionHandler = () => {
         const updateConversationHanlder = (conversation: FullConversation) => {
             if (!conversation.messages || isOpen) return;
             const message = conversation.messages[0];
-            if (message.sender.email === pusherKey) return;
+            if (message?.sender?.email === pusherKey) return;
             playNewMsg();
             toast({
-                title: message.sender.name || '',
+                title: message?.sender?.name || '',
                 description: message.image ? 'Sent an image' : (message.body && message.body.length > 40) ? `${message.body.slice(0, 40)}...` : message.body,
                 action: <ToastAction altText="View" onClick={() => {
                     router.push(`/conversations/${conversation.id}`)

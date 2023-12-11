@@ -8,12 +8,7 @@ import Image from "next/image";
 import useActiveList from "@/hooks/useActiveList";
 
 type Props = {
-    user: User | {
-        id?: string,
-        name: string,
-        image: string,
-        email: string,
-    },
+    user: Partial<User>,
     activeStatus?: boolean,
     className?: string,
 }
@@ -21,7 +16,7 @@ type Props = {
 export default function Avatar({ user, activeStatus, className = '' }: Props) {
 
     const { members } = useActiveList();
-    
+
     if (!user) return (
         <Image alt="avatar" src="/images/avatarPlaceholder.webp" height={42} width={42} className="w-auto" />
     )

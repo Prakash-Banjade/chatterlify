@@ -15,6 +15,7 @@ export default function Form() {
         register,
         handleSubmit,
         setValue,
+        setFocus,
         formState: {
             errors,
         }
@@ -26,6 +27,8 @@ export default function Form() {
 
     const onSubmit: SubmitHandler<FieldValues> = async data => {
         setValue('message', '', { shouldValidate: true });
+        setFocus('message')
+
         try {
             const res = await fetch('/api/messages', {
                 method: 'POST',

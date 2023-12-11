@@ -13,6 +13,16 @@ export default async function getCurrentUser() {
         const currentUser = await prisma.user.findUnique({
             where: {
                 email: session.user.email as string,
+            },
+            select: {
+                id: true,
+                name: true,
+                email: true,
+                image: true,
+                bio: true,
+                socialLinks: true,
+                createdAt: true,
+                updatedAt: true,
             }
         })
 

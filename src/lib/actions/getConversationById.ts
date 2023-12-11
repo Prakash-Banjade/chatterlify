@@ -12,8 +12,46 @@ export default async function getConversationbyId(conversationId: string) {
                 id: conversationId
             },
             include: {
-                // messages: true,
-                users: true
+                messages: {
+                    include: {
+                        sender: {
+                            select: {
+                                id: true,
+                                name: true,
+                                email: true,
+                                image: true,
+                                bio: true,
+                                socialLinks: true,
+                                createdAt: true,
+                                updatedAt: true,
+                            }
+                        },
+                        seen: {
+                            select: {
+                                id: true,
+                                name: true,
+                                email: true,
+                                image: true,
+                                bio: true,
+                                socialLinks: true,
+                                createdAt: true,
+                                updatedAt: true,
+                            }
+                        }
+                    }
+                },
+                users: {
+                    select: {
+                        id: true,
+                        name: true,
+                        email: true,
+                        image: true,
+                        bio: true,
+                        socialLinks: true,
+                        createdAt: true,
+                        updatedAt: true,
+                    }
+                }
             }
         })
 

@@ -35,7 +35,18 @@ export async function POST(req: Request) {
                     }
                 },
                 include: {
-                    users: true // populate the user
+                    users: {
+                        select: {
+                            id: true,
+                            name: true,
+                            email: true,
+                            image: true,
+                            bio: true,
+                            socialLinks: true,
+                            createdAt: true,
+                            updatedAt: true,
+                        }
+                    }
                 }
             });
 
@@ -87,7 +98,18 @@ export async function POST(req: Request) {
                 }
             },
             include: {
-                users: true
+                users: {
+                    select: {
+                        id: true,
+                        name: true,
+                        email: true,
+                        image: true,
+                        bio: true,
+                        socialLinks: true,
+                        createdAt: true,
+                        updatedAt: true,
+                    }
+                }
             }
         })
 

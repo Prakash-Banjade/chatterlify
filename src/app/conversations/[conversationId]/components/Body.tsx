@@ -43,6 +43,7 @@ export default function Body({ initialMessages, currentUser }: Props) {
             }).catch((e) => console.log(e)) // as the message is received, we have user has seen the message
 
             setTypingUser(null);
+            console.log('message: ', message);
 
             setMessages(prev => {
                 if (find(prev, { id: message.id })) { // this will look for the message in the array, if found, it will not add the message to the array, else it will add the message to the array, avoid duplication of same message
@@ -51,6 +52,7 @@ export default function Body({ initialMessages, currentUser }: Props) {
 
                 return [...prev, message]
             })
+            console.log('message displayed')
 
             // scroll to new message added
             if (bottomRef?.current) bottomRef.current.scrollIntoView({ behavior: 'smooth' })

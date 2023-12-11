@@ -47,7 +47,7 @@ export default function MessageBox({ isLast, data, setMessages, currentUser }: P
     return (
         <div className={container}>
             {!isOwn && <div className={avatar}>
-                <Avatar user={data?.sender} />
+                <Avatar user={data?.sender!} />
             </div>}
 
             <div className={body}>

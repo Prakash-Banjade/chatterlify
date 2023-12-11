@@ -38,22 +38,10 @@ export default function ConversationLIst({ initialItems, users, currentUser }: P
         return session.data?.user?.email;
     }, [session.data?.user?.email])
 
-    // message audio
-    const { play: playNewMsg } = useAudio('/audios/new_message.mp3')
-
     useEffect(() => {
         if (!pusherKey) return;
 
         pusherClient.subscribe(pusherKey);
-
-        const newConversationHanlder = (conversation: FullConversation) => {
-            setItems(prev => {
-                if (find(prev, { id: conversation.id })) return prev
-
-                return [conversation, ...prev]
-            });
-            playNewMsg();
-        }
 
         const updateConversationHanlder = (conversation: FullConversation) => {
             if (!conversation.messages) return;
@@ -80,13 +68,11 @@ export default function ConversationLIst({ initialItems, users, currentUser }: P
             }
         }
 
-        pusherClient.bind('conversation:new', newConversationHanlder);
         pusherClient.bind('conversation:update', updateConversationHanlder);
         pusherClient.bind('conversation:remove', removeHandler);
 
         return () => {
             pusherClient.unsubscribe(pusherKey);
-            pusherClient.unbind('conversation:new', newConversationHanlder);
             pusherClient.unbind('conversation:update', updateConversationHanlder);
             pusherClient.unbind('conversation:remove', removeHandler);
         }
