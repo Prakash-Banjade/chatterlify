@@ -58,23 +58,12 @@ export default function ConversationLIst({ initialItems, users, currentUser }: P
             }));
         }
 
-        const removeHandler = (id: string) => {
-            setItems(prev => {
-                return [...prev.filter(prevCon => prevCon.id !== id)]
-            })
-
-            if (conversationId === id) {
-                router.push('/conversations')
-            }
-        }
 
         pusherClient.bind('conversation:update', updateConversationHanlder);
-        pusherClient.bind('conversation:remove', removeHandler);
 
         return () => {
             pusherClient.unsubscribe(pusherKey);
             pusherClient.unbind('conversation:update', updateConversationHanlder);
-            pusherClient.unbind('conversation:remove', removeHandler);
         }
     }, [pusherKey, conversationId, router, items])
 

@@ -4,18 +4,23 @@ import { Button } from '@/components/ui/button'
 import { Icons } from '@/components/ui/icons'
 import { useToast } from '@/components/ui/use-toast'
 import AlertDialogBox from '@/components/utils/AlertDialog'
+import { useCurrentConversations } from '@/context/ConversationsProvider'
 import useConversation from '@/hooks/useConversation'
+import { pusherClient } from '@/lib/pusher'
 import { TrashIcon } from '@radix-ui/react-icons'
+import { useSession } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 
 export default function ConfirmModal() {
 
     const router = useRouter();
     const { conversationId } = useConversation();
+    const { items, setItems } = useCurrentConversations();
     const [isLoading, setIsLoading] = useState(false);
     const [open, setOpen] = useState(false)
     const { toast } = useToast();
+    const session = useSession();
 
     const onDelete = useCallback(async () => {
         setIsLoading(true);
@@ -64,6 +69,31 @@ export default function ConfirmModal() {
             }
         </Button>
     )
+
+    const pusherKey = useMemo(() => {
+        return session.data?.user?.email;
+    }, [session.data?.user?.email])
+
+    useEffect(() => {
+        if (!pusherKey) return;
+
+        pusherClient.subscribe(pusherKey);
+
+        const removeHandler = (id: string) => {
+            setItems(prev => {
+                return [...prev.filter(prevCon => prevCon.id !== id)]
+            })
+
+            if (conversationId === id) {
+                router.push('/conversations')
+            }
+        }
+        pusherClient.bind('conversation:remove', removeHandler);
+
+        return () => {
+            pusherClient.unbind('conversation:remove', removeHandler);
+        }
+    }, [pusherKey, items, conversationId, router])
 
     const alertDesc = `This action cannot be undone. This will permanently delete this
     conversation and remove data from our servers.`
