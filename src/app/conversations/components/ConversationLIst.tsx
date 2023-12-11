@@ -10,19 +10,15 @@ import { User } from "@prisma/client";
 import GroupChatModal from "./GroupChatModal";
 import { useSession } from "next-auth/react";
 import { pusherClient } from "@/lib/pusher";
-import { find } from "lodash";
 import UserFilterBox from "@/app/components/UserFilterBox";
 import ActiveUsers from "./activeUsersDisplay/ActiveUsers";
-import useAudio from "@/hooks/useAudio";
 import { useCurrentConversations } from "@/context/ConversationsProvider";
 
 type Props = {
-    initialItems: FullConversation[],
     users: User[] | null,
-    currentUser?: User,
 }
 
-export default function ConversationLIst({ initialItems, users, currentUser }: Props) {
+export default function ConversationLIst({ users }: Props) {
 
     // const [items, setItems] = useState(initialItems);
     const { items, setItems } = useCurrentConversations();

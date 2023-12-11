@@ -24,9 +24,7 @@ export default async function ConversationsLayout({
         <Sidebar>
             <div className="lg:pl-20 h-full">
                 <ConversationLIst
-                    initialItems={conversations}
                     users={users}
-                    currentUser={currentUser!}
                 />
                 {children}
             </div>

@@ -22,11 +22,44 @@ const getConversations = async () => {
                 users: true,
                 messages: {
                     include: {
-                        sender: true,
-                        seen: true,
+                        sender: {
+                            select: {
+                                id: true,
+                                name: true,
+                                email: true,
+                                image: true,
+                                bio: true,
+                                socialLinks: true,
+                                createdAt: true,
+                                updatedAt: true,
+                            }
+                        },
+                        seen: {
+                            select: {
+                                id: true,
+                                name: true,
+                                email: true,
+                                image: true,
+                                bio: true,
+                                socialLinks: true,
+                                createdAt: true,
+                                updatedAt: true,
+                            }
+                        },
                         reactions: {
                             include: {
-                                user: true,
+                                user: {
+                                    select: {
+                                        id: true,
+                                        name: true,
+                                        email: true,
+                                        image: true,
+                                        bio: true,
+                                        socialLinks: true,
+                                        createdAt: true,
+                                        updatedAt: true,
+                                    }
+                                },
                             }
                         }
                     }
