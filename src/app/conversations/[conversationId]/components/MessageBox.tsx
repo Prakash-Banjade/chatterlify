@@ -40,7 +40,7 @@ export default function MessageBox({ isLast, data, setMessages, currentUser }: P
 
     const message = clsx(
         "text-sm w-fit relative select-none",
-        isOwn ? 'bg-sky-600 text-white' : 'bg-backgroundSecondary',
+        isOwn && !data?.image ? 'bg-sky-600 text-white' : 'bg-backgroundSecondary',
         data.image ? 'rounded-md p-0' : isOwn ? 'rounded-[20px] rounded-tr-md py-2 px-3 max-w-[80%]' : 'rounded-[20px] rounded-tl-md py-2 px-3 max-w-[80%]'
     )
 
@@ -70,7 +70,7 @@ export default function MessageBox({ isLast, data, setMessages, currentUser }: P
                                         height="288"
                                         width="288"
                                         src={data.image}
-                                        className="object-cover cursor-pointer hover:scale110 transition w-auto h-auto"
+                                        className="object-cover cursor-pointer hover:scale110 transition w-auto h-auto rounded-lg"
                                     />
                                 </ImageModal>
                             ) : (

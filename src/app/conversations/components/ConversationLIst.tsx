@@ -25,8 +25,8 @@ type Props = {
 export default function ConversationLIst({ initialItems, users, currentUser }: Props) {
 
     // const [items, setItems] = useState(initialItems);
-    const {items, setItems} = useCurrentConversations();
-    
+    const { items, setItems } = useCurrentConversations();
+
     const [query, setQuery] = useState('')
     const session = useSession();
     const router = useRouter();
@@ -70,12 +70,12 @@ export default function ConversationLIst({ initialItems, users, currentUser }: P
             }));
         }
 
-        const removeHandler = (conversation: FullConversation) => {
+        const removeHandler = (id: string) => {
             setItems(prev => {
-                return [...prev.filter(prevCon => prevCon.id !== conversation.id)]
+                return [...prev.filter(prevCon => prevCon.id !== id)]
             })
 
-            if (conversationId === conversation.id) {
+            if (conversationId === id) {
                 router.push('/conversations')
             }
         }

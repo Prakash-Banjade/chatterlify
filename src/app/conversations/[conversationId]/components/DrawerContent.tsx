@@ -38,7 +38,7 @@ export default function DrawerContent({ data }: Props) {
     }, [data, members, otherUser?.email])
 
     return (
-        <div className="relative mt-10 flex-1 px-4 sm:px-6">
+        <div className="relative mt-10 flex-1">
             <div className="flex flex-col items-center">
                 <div className="mb-2">
                     {
@@ -73,7 +73,7 @@ export default function DrawerContent({ data }: Props) {
                                             <Avatar user={user} activeStatus />
                                             <div className="flex flex-col gap-1.5">
                                                 <span className="text-sm">{user.name}</span>
-                                                <span className="text-xs text-muted-foreground">{user.email}</span>
+                                                <span className="text-xs text-muted-foreground break-words text-center">{user.email}</span>
                                             </div>
                                         </div>
                                     ))}
@@ -85,7 +85,7 @@ export default function DrawerContent({ data }: Props) {
                                     <dt className="text-sm font-medium text-gray-500 sm:2-40 sm:flex-shrink-0">
                                         Email
                                     </dt>
-                                    <dd className='mt-1 tet-sm sm:col-span-2'>
+                                    <dd className='mt-1 tet-sm sm:col-span-2 break-words'>
                                         {otherUser.email}
                                     </dd>
                                 </div>
