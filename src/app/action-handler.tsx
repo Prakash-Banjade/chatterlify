@@ -41,7 +41,6 @@ export const ActionHandler = () => {
             if (!conversation.messages || isOpen) return;
             const message = conversation.messages[0];
             if (message.sender.email === pusherKey) return;
-            console.log('triggered')
             playNewMsg();
             toast({
                 title: message.sender.name || '',
@@ -55,7 +54,7 @@ export const ActionHandler = () => {
 
 
         const newMessageHandler = (message: FullMessage) => {
-            console.log('new message: ', message)
+            // console.log('new message: ', message)
         }
 
         const updateMessageHandler = (newMessage: FullMessage) => {

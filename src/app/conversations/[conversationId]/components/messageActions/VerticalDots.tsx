@@ -39,7 +39,6 @@ export default function VerticalDots({ message, setMessages, isOwn }: VerticalDo
                 })
             })
 
-            console.log(res);
         } catch (e) {
             console.log(e)
         }
@@ -66,7 +65,6 @@ export default function VerticalDots({ message, setMessages, isOwn }: VerticalDo
 
         const onDelete = (id: string) => {
             if (!id) return;
-            console.log(id)
 
             setMessages(prev => {
                 return [...prev.filter(m => m.id !== id)]

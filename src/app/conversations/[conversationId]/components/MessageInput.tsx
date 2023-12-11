@@ -20,7 +20,6 @@ export default function MessageInput({ placeholder, id, type, required, register
 
     const handleTyping = debounce((isTyping: boolean) => {
         if (isTyping) {
-            console.log('typing...');
             fetch('/api/typing', {
                 method: 'POST',
                 headers: {

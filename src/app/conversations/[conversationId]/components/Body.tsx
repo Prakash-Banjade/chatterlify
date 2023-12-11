@@ -83,8 +83,6 @@ export default function Body({ initialMessages, currentUser }: Props) {
                 } : message;
             }))
 
-            console.log(reactions);
-            console.log('new reaction added')
         }
 
         // listen for new messages

@@ -34,7 +34,6 @@ export default function ReactionsDisplay({ message, isOwn, currentUser, setMessa
                 })
             })
 
-            console.log(res)
         } catch (e) {
             if (e instanceof Error) console.log(e);
         }
@@ -48,7 +47,6 @@ export default function ReactionsDisplay({ message, isOwn, currentUser, setMessa
                 return [...prev.map(msg => msg.id === messageId ? { ...msg, reactions: msg?.reactions?.filter(r => r.id !== reactionId) } : msg)]
             })
 
-            console.log('removed')
         }
 
         pusherClient.bind('reaction:remove', removeHandler)
