@@ -96,7 +96,7 @@ export default function ConversationLIst({ users }: Props) {
                 </div>
 
                 <div className="mb-4 px-4">
-                    <UserFilterBox query={query} setQuery={setQuery} />
+                    {/* <UserFilterBox label="conversation" /> */}
                 </div>
 
                 <div className="px-4 mb-4">

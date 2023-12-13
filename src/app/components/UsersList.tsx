@@ -23,7 +23,6 @@ export default function UsersList({ users, hasNextPage }: GetUsersProps) {
     const [usersLoading, setUsersLoading] = useState(false);
     const [currentPage, setCurrentPage] = useState<number>(1)
 
-    const [query, setQuery] = useState('')
     const session = useSession();
     const { items, setItems } = useCurrentConversations();
     const { conversationId } = useConversation();
@@ -34,11 +33,6 @@ export default function UsersList({ users, hasNextPage }: GetUsersProps) {
     }, [session.data?.user?.email])
     // message audio
     const { play: playNewMsg } = useAudio('/audios/new_message.mp3')
-
-    const filteredUsers = useCallback((users: Partial<User>[] | null): Partial<User>[] | null => {
-        if (!users) return null;
-        return users.filter(user => user?.name?.toLowerCase().includes(query.toLocaleLowerCase()))
-    }, [query])
 
     useEffect(() => {
         if (!pusherKey) return;
@@ -94,13 +88,13 @@ export default function UsersList({ users, hasNextPage }: GetUsersProps) {
     return (
         <>
             <div className="mb-4 px-4">
-                <UserFilterBox query={query} setQuery={setQuery} label="users" />
+                <UserFilterBox setState={setUsersState} setLoading={setUsersLoading} initialState={{ users, hasNextPage }} />   
             </div>
             <section className="px-1.5">
-                {filteredUsers(usersState.users)?.map((user) => (
+                {!usersLoading && usersState.users?.map((user) => (
                     <UserBox key={user.id} user={user} />
                 ))}
-                {!filteredUsers(usersState.users)?.length && <div className="text-muted-foreground text-sm px-4 py-2">No user found</div>}
+                {!usersLoading && !usersState.users?.length && <div className="text-muted-foreground text-sm px-4 py-2">No user found</div>}
 
                 {
                     usersState.hasNextPage && !usersLoading && (
