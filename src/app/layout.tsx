@@ -9,6 +9,8 @@ import ActiveStatus from './components/ActiveStatus'
 import { ActionHandler } from './action-handler'
 import CurrentConversationProvider from '@/context/ConversationsProvider'
 import getConversations from '@/lib/actions/getConversations'
+import CurrentUsersProvider from '@/context/UsersProvider'
+import getUsers from '@/lib/actions/getUsers'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -24,7 +26,7 @@ export default async function RootLayout({
 }) {
 
   const result = await getConversations();
-
+  const usersState = await getUsers();
 
 
   return (
@@ -37,13 +39,15 @@ export default async function RootLayout({
           disableTransitionOnChange
         >
           <CurrentConversationProvider initialState={result}>
-            <AuthProvider>
-              <ActionHandler />
-              <NextTopLoader />
-              <ActiveStatus />
-              {children}
-            </AuthProvider>
-            <Toaster />
+            <CurrentUsersProvider initialState={usersState}>
+              <AuthProvider>
+                <ActionHandler />
+                <NextTopLoader />
+                <ActiveStatus />
+                {children}
+              </AuthProvider>
+              <Toaster />
+            </CurrentUsersProvider>
           </CurrentConversationProvider>
         </ThemeProvider>
       </body>

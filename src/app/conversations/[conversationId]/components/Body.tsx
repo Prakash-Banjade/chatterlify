@@ -11,7 +11,7 @@ import useListenMessageEvents from "@/hooks/useListenMessageEvents";
 
 type Props = {
     initialMessages: FullMessage[],
-    currentUser: User,
+    currentUser: Partial<User>,
 }
 
 export default function Body({ initialMessages, currentUser }: Props) {

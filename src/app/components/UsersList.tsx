@@ -7,11 +7,12 @@ import { Button } from "@/components/ui/button";
 import { LoadingUsers } from "./sidebar/UsersLoading";
 import { GetUsersProps } from "@/lib/actions/getUsers";
 import useListenNewConversation from "@/hooks/useListenNewConversation";
+import { useCurrentUsers } from "@/context/UsersProvider";
 
 
 export default function UsersList({ users, hasNextPage }: GetUsersProps) {
 
-    const [usersState, setUsersState] = useState<GetUsersProps>({ users, hasNextPage })
+    const { usersState, setUsersState } = useCurrentUsers();
     const [usersLoading, setUsersLoading] = useState(false);
     const [usersSearching, setUsersSearching] = useState(false);
     const [currentPage, setCurrentPage] = useState<number>(1)
