@@ -13,7 +13,7 @@ type Props = {
     isLast?: boolean,
     data: FullMessage,
     setMessages: React.Dispatch<React.SetStateAction<FullMessage[]>>,
-    currentUser: User,
+    currentUser: Partial<User>,
 }
 
 export default function MessageBox({ isLast, data, setMessages, currentUser }: Props) {

@@ -30,7 +30,7 @@ export const reactionObj: Record<string, string> = {
 interface Props {
     message: FullMessage,
     setMessages: React.Dispatch<React.SetStateAction<FullMessage[]>>,
-    currentUser: User,
+    currentUser: Partial<User>,
 }
 
 export default function ReactionBtn({ message, setMessages, currentUser }: Props) {
@@ -48,7 +48,7 @@ export default function ReactionBtn({ message, setMessages, currentUser }: Props
         try {
             const newReaction: FullReaction = {
                 id: uuidv4(),
-                userId: currentUser.id,
+                userId: currentUser.id || '',
                 user: currentUser,
                 reaction: key,
                 messageId: message.id

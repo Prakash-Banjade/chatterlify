@@ -14,7 +14,7 @@ interface ReactionsDisplayProps {
     message: FullMessage,
     isOwn: boolean,
     setMessages: React.Dispatch<React.SetStateAction<FullMessage[]>>,
-    currentUser: User,
+    currentUser: Partial<User>,
 }
 
 export default function ReactionsDisplay({ message, isOwn, currentUser, setMessages }: ReactionsDisplayProps) {
@@ -85,13 +85,13 @@ export default function ReactionsDisplay({ message, isOwn, currentUser, setMessa
                         {
                             message?.reactions?.map(r => {
                                 return (
-                                    <Button variant="ghost" className="py-8 justify-start" key={r.id} onClick={() => handleDelete(r.id, currentUser.id === r.user.id)}>
+                                    <Button variant="ghost" className="py-8 justify-start" key={r.id} onClick={() => handleDelete(r.id, currentUser?.id === r.user.id)}>
                                         <div className="flex items-center justify-between grow flex-1 gap-2">
                                             <div className="flex gap-3 items-center">
                                                 <Avatar user={r.user} className="md:h-10 md:w-10" />
                                                 <div className="flex flex-col gap-1">
                                                     <p className="text-foreground font-medium">{r.user?.name}</p>
-                                                    {currentUser.id === r.user.id &&
+                                                    {currentUser?.id === r.user.id &&
                                                         <p className="text-xs text-muted-foreground">Click to remove</p>
                                                     }
                                                 </div>

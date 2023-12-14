@@ -17,7 +17,7 @@ export interface SideActionBtnsProps {
     message: FullMessage,
     isOwn: boolean,
     setMessages: React.Dispatch<React.SetStateAction<FullMessage[]>>,
-    currentUser: User,
+    currentUser: Partial<User>,
 }
 
 
