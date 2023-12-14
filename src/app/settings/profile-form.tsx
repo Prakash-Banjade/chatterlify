@@ -48,7 +48,7 @@ const profileFormSchema = z.object({
 type ProfileFormValues = z.infer<typeof profileFormSchema>
 
 type Props = {
-    currentUser: User
+    currentUser: Partial<User>
 }
 
 export function ProfileForm({ currentUser }: Props) {
@@ -91,7 +91,7 @@ export function ProfileForm({ currentUser }: Props) {
             toast({
                 title: 'Profile Updated'
             })
-            
+
         } catch (e) {
             if (e instanceof Error) {
                 return toast({

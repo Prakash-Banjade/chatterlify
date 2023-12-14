@@ -49,7 +49,7 @@ const defaultValues: Partial<NewPwdFormValues> = {
 }
 
 type Props = {
-    user: User,
+    user: Partial<User>,
 }
 
 
@@ -65,7 +65,7 @@ export function NewPasswordForm({ user }: Props) {
     async function onSubmit(data: NewPwdFormValues) {
         const { currentPwd, newPassword } = data
 
-        if (!user.hashedPassword) return;
+        if (!user?.hashedPassword) return;
 
         setLoading(true)
 

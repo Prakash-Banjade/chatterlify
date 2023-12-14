@@ -55,7 +55,7 @@ export default function useListenMessageEvents({ setTypingUser, setMessages, bot
         }
 
         let timeOut: NodeJS.Timeout;
-        const typingMessageHandler = (user: User) => {
+        const typingMessageHandler = (user: Partial<User>) => {
             if (user && user?.email !== currentUserEmail && conversationId) {
                 setTypingUser(user)
                 typingPlay(); // typing sound
