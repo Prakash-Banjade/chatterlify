@@ -13,7 +13,7 @@ import { GearIcon } from "@radix-ui/react-icons";
 import ProfileDropDown from "../ProfileDropDown";
 
 type DesktopSidebarProps = {
-    currentUser: User
+    currentUser: Partial<User>
 }
 
 export default function DesktopSidebar({ currentUser }: DesktopSidebarProps) {

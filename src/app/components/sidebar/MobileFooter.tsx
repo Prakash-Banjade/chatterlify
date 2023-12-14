@@ -10,7 +10,7 @@ import { User } from "@prisma/client";
 import { Button } from "@/components/ui/button";
 
 type MobileFooterProps = {
-    currentUser: User
+    currentUser: Partial<User>
 }
 
 export default function MobileFooter({ currentUser }: MobileFooterProps) {
