@@ -23,6 +23,7 @@ export default async function getCurrentUser() {
                 socialLinks: true,
                 createdAt: true,
                 updatedAt: true,
+                hashedPassword: true
             }
         })
 
