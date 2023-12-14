@@ -16,7 +16,7 @@ export default function ConfirmModal() {
 
     const router = useRouter();
     const { conversationId } = useConversation();
-    const { items, setItems } = useCurrentConversations();
+    const { conversationState, setConversationState } = useCurrentConversations();
     const [isLoading, setIsLoading] = useState(false);
     const [open, setOpen] = useState(false)
     const { toast } = useToast();
@@ -80,9 +80,10 @@ export default function ConfirmModal() {
         pusherClient.subscribe(pusherKey);
 
         const removeHandler = (id: string) => {
-            setItems(prev => {
-                return [...prev.filter(prevCon => prevCon.id !== id)]
-            })
+            setConversationState(prev => ({
+                ...prev,
+                conversations: prev.conversations.filter(c => c.id !== id)
+            }))
 
             if (conversationId === id) {
                 router.push('/conversations')
@@ -93,7 +94,7 @@ export default function ConfirmModal() {
         return () => {
             pusherClient.unbind('conversation:remove', removeHandler);
         }
-    }, [pusherKey, items, conversationId, router])
+    }, [pusherKey, conversationState, conversationId, router])
 
     const alertDesc = `This action cannot be undone. This will permanently delete this
     conversation and remove data from our servers.`
