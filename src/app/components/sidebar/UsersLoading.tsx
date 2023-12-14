@@ -15,7 +15,7 @@ const UserLoadingSkeleton = () => {
     </div>
 }
 
-const fakeArray = new Array(5).fill('')
+const fakeArray = new Array(10).fill('')
 
 export function LoadingUsers({ className }: { className?: string }) {
     return <section className={cn("px-4 flex flex-col gap-5", className)}>

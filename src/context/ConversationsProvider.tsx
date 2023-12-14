@@ -1,30 +1,34 @@
 'use client'
 
 import { useContext, createContext, useState, ReactNode, Dispatch, SetStateAction } from "react";
-import { FullConversation } from "../../types";
+import { GetConversationsProps } from "@/lib/actions/getConversations";
 
-interface CurrentConversationsContextType {
-    items: FullConversation[];
-    setItems: Dispatch<SetStateAction<FullConversation[]>>;
+
+interface CurrentConversationValue {
+    conversationState: GetConversationsProps,
+    setConversationState: Dispatch<SetStateAction<GetConversationsProps>>;
 }
 
-const CurrentConversationsContext = createContext<CurrentConversationsContextType>({
-    items: [],
-    setItems: () => { },
+const CurrentConversationsContext = createContext<CurrentConversationValue>({
+    conversationState: {
+        conversations: [],
+        hasNextPage: false,
+    },
+    setConversationState: () => { }
 });
 
 interface CurrentConversationProviderProps {
-    initialItems: FullConversation[],
+    initialState: GetConversationsProps,
     children: ReactNode;
 }
 
-export default function CurrentConversationProvider({ initialItems, children }: CurrentConversationProviderProps) {
-    const [items, setItems] = useState<FullConversation[]>(initialItems);
+export default function CurrentConversationProvider({ initialState, children }: CurrentConversationProviderProps) {
+    const [conversationState, setConversationState] = useState(initialState)
 
-    const contextValue: CurrentConversationsContextType = {
-        items,
-        setItems,
-    };
+    const contextValue: CurrentConversationValue = {
+        conversationState,
+        setConversationState
+    }
 
     return (
         <CurrentConversationsContext.Provider value={contextValue}>

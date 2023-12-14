@@ -1,61 +1,22 @@
 'use client'
 
-import { User } from "@prisma/client";
 import UserBox from "./UserBox";
 import UserFilterBox from "./UserFilterBox";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { pusherClient } from "@/lib/pusher";
-import { useSession } from "next-auth/react";
-import { find } from "lodash";
-import { FullConversation } from "../../../types";
-import useAudio from "@/hooks/useAudio";
-import { useCurrentConversations } from "@/context/ConversationsProvider";
-import useConversation from "@/hooks/useConversation";
-import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { LoadingUsers } from "./sidebar/UsersLoading";
 import { GetUsersProps } from "@/lib/actions/getUsers";
+import useListenNewConversation from "@/hooks/useListenNewConversation";
 
 
 export default function UsersList({ users, hasNextPage }: GetUsersProps) {
 
     const [usersState, setUsersState] = useState<GetUsersProps>({ users, hasNextPage })
     const [usersLoading, setUsersLoading] = useState(false);
+    const [usersSearching, setUsersSearching] = useState(false);
     const [currentPage, setCurrentPage] = useState<number>(1)
 
-    const session = useSession();
-    const { items, setItems } = useCurrentConversations();
-    const { conversationId } = useConversation();
-    const router = useRouter();
-
-    const pusherKey = useMemo(() => {
-        return session.data?.user?.email;
-    }, [session.data?.user?.email])
-    // message audio
-    const { play: playNewMsg } = useAudio('/audios/new_message.mp3')
-
-    useEffect(() => {
-        if (!pusherKey) return;
-        pusherClient.subscribe(pusherKey)
-
-        const newConversationHanlder = (conversation: FullConversation) => {
-            console.log('new conversation added with: ', conversation.users[1])
-            setItems(prev => {
-                if (find(prev, { id: conversation.id })) return prev
-
-                return [conversation, ...prev]
-            });
-            playNewMsg();
-        }
-
-        pusherClient.bind('conversation:new', newConversationHanlder);
-
-        return () => {
-            pusherClient.unsubscribe(pusherKey)
-            pusherClient.unbind('conversation:new', newConversationHanlder);
-        }
-    }, [pusherKey, items, conversationId, router])
-
+    useListenNewConversation(); // listening for conversation:new pusher event
 
     const loadMore = async () => {
         setCurrentPage(prev => prev + 1);
@@ -79,7 +40,7 @@ export default function UsersList({ users, hasNextPage }: GetUsersProps) {
             });
 
         } catch (e) {
-            setCurrentPage(prev => prev + 1);
+            setCurrentPage(prev => prev - 1);
         } finally {
             setUsersLoading(false);
         }
@@ -88,16 +49,16 @@ export default function UsersList({ users, hasNextPage }: GetUsersProps) {
     return (
         <>
             <div className="mb-4 px-4">
-                <UserFilterBox setState={setUsersState} setLoading={setUsersLoading} initialState={{ users, hasNextPage }} />   
+                <UserFilterBox setState={setUsersState} setLoading={setUsersSearching} initialState={{ users, hasNextPage }} />
             </div>
             <section className="px-1.5">
-                {!usersLoading && usersState.users?.map((user) => (
+                {!usersSearching && usersState.users?.map((user) => (
                     <UserBox key={user.id} user={user} />
                 ))}
-                {!usersLoading && !usersState.users?.length && <div className="text-muted-foreground text-sm px-4 py-2">No user found</div>}
+                {!usersLoading && !usersState.users?.length && !usersSearching && <div className="text-muted-foreground text-sm px-4 py-2">No user found</div>}
 
                 {
-                    usersState.hasNextPage && !usersLoading && (
+                    usersState.hasNextPage && !usersLoading && !usersSearching && (
                         <div className="flex justify-center mt-10">
                             <Button onClick={loadMore} disabled={usersLoading}>
                                 Load more
@@ -107,7 +68,7 @@ export default function UsersList({ users, hasNextPage }: GetUsersProps) {
                 }
 
                 {
-                    usersLoading && <LoadingUsers className="mt-2 px-3" />
+                    (usersLoading || usersSearching) && <LoadingUsers className="mt-2 px-3 gap-6" />
                 }
             </section>
         </>

@@ -1,12 +1,23 @@
 import prisma from "@/lib/prismadb";
 import getCurrentUser from "./getCurrentUser";
+import { FullConversation } from "../../../types";
 
-const getConversations = async () => {
+export interface GetConversationsProps {
+    conversations: FullConversation[]
+    hasNextPage: boolean
+}
+
+const getConversations = async (page: number = 1, limit: number = 10): Promise<GetConversationsProps> => {
     const currentUser = await getCurrentUser();
 
     if (!currentUser?.id) {
-        return [];
+        return {
+            conversations: [],
+            hasNextPage: false,
+        };
     }
+
+    const skip = (page - 1) * limit;
 
     try {
         const conversations = await prisma.conversation.findMany({
@@ -64,12 +75,30 @@ const getConversations = async () => {
                         }
                     }
                 },
-            }
+            },
+            skip: skip,
+            take: limit,
         });
 
-        return conversations;
+        const totalConversations = await prisma.conversation.count({
+            where: {
+                userIds: {
+                    has: currentUser.id
+                }
+            },
+        })
+
+        const hasNextPage = page * limit < totalConversations;
+
+        return {
+            conversations: conversations,
+            hasNextPage,
+        };
     } catch (error: any) {
-        return [];
+        return {
+            conversations: [],
+            hasNextPage: false,
+        };
     }
 };
 

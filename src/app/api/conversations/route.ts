@@ -1,10 +1,33 @@
 import getCurrentUser from "@/lib/actions/getCurrentUser";
 
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import prisma from "@/lib/prismadb";
 import { pusherServer } from "@/lib/pusher";
+import getConversations from "@/lib/actions/getConversations";
 
-export async function POST(req: Request) {
+export async function GET(req: NextRequest) {
+    try {
+        const currentUser = await getCurrentUser();
+
+        if (!currentUser?.id) {
+            return new NextResponse("Unauthorized", { status: 401 });
+        }
+
+        const params = new URL(req.url).searchParams;
+        const page = Number(params.get('page')) || 1
+        const limit = Number(params.get('limit')) || 10
+
+        const result = await getConversations(page, limit);
+
+        return NextResponse.json(result);
+        
+    } catch (e) {
+        if (e instanceof Error) return new NextResponse(e.message, { status: 500 })
+        return new NextResponse('Internal Error', { status: 500 })
+    }
+}
+
+export async function POST(req: NextRequest) {
     try {
         const currentUser = await getCurrentUser();
         const { userId, isGroup, members, name } = await req.json();

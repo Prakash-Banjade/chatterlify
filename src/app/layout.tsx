@@ -23,7 +23,7 @@ export default async function RootLayout({
   children: React.ReactNode
 }) {
 
-  const conversations = await getConversations();
+  const result = await getConversations();
 
 
 
@@ -36,7 +36,7 @@ export default async function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <CurrentConversationProvider initialItems={conversations}>
+          <CurrentConversationProvider initialState={result}>
             <AuthProvider>
               <ActionHandler />
               <NextTopLoader />
