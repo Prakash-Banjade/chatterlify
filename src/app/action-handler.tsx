@@ -15,7 +15,7 @@ import { useCurrentConversations } from "@/context/ConversationsProvider";
 export const ActionHandler = () => {
 
     const session = useSession();
-    const { items } = useCurrentConversations();
+    const { conversationState } = useCurrentConversations();
     const { conversationId, isOpen } = useConversation();
     const { toast } = useToast();
     const { play: playNewMsg } = useAudio('/audios/new_message.mp3')
@@ -73,7 +73,7 @@ export const ActionHandler = () => {
             pusherClient.unbind('messages:new', newMessageHandler)
             pusherClient.unbind('message:update', updateMessageHandler);
         }
-    }, [pusherKey, items])
+    }, [pusherKey, conversationState])
 
 
     return null;
