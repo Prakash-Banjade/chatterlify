@@ -1,6 +1,6 @@
 'use client'
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import useConversation from "@/hooks/useConversation";
 import clsx from "clsx";
 import ConversationBox from "./ConversationBox";
@@ -14,6 +14,8 @@ import { GetConversationsProps } from "@/lib/actions/getConversations";
 import useListenNewConversation from "@/hooks/useListenNewConversation";
 import useListenUpdateConversation from "@/hooks/useListenUpdateConversation";
 import ConversationSearchBox from "@/app/components/ConversationSearchBox";
+import useSetupServiceWorker from "@/hooks/useSetupServiceWorker";
+import { getReadyServiceWorker } from "@/lib/serviceWorker";
 
 type Props = {
     users: Partial<User>[],
@@ -31,6 +33,7 @@ export default function ConversationLIst({ users, initialState }: Props) {
 
     useListenNewConversation(); // listening conversation:new pusher event
     useListenUpdateConversation(); // listening conversation:update pusher event
+    useSetupServiceWorker(); // setup service worker
 
     const loadMore = async () => {
         setCurrentPage(prev => prev + 1);
