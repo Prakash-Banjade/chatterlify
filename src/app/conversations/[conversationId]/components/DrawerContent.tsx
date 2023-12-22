@@ -95,7 +95,7 @@ export default function DrawerContent({ data }: Props) {
                                         {otherUser.email}
                                     </dd>
                                 </div>
-                                <div>
+                               {Boolean(otherUser.socialLinks?.length) && <div>
                                     <dt className="text-sm font-medium text-gray-500 sm:2-40 sm:flex-shrink-0">
                                         I am available on
                                     </dt>
@@ -108,7 +108,7 @@ export default function DrawerContent({ data }: Props) {
                                             }
                                         </div>
                                     </dd>
-                                </div>
+                                </div>}
                                 <div>
                                     <dt className="text-sm font-medium text-gray-500 sm:2-40 sm:flex-shrink-0">
                                         Joined
