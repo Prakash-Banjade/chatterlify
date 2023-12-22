@@ -6,6 +6,7 @@ import Body from "./components/Body";
 import Form from "./components/Form";
 import getConversations from "@/lib/actions/getConversations";
 import getCurrentUser from "@/lib/actions/getCurrentUser";
+import DrawerContent from "./components/DrawerContent";
 
 type Params = {
     conversationId: string,
@@ -42,13 +43,15 @@ export default async function ConversationId({ params }: { params: Params }) {
     }
 
     return (
-        <div className="lg:pl-80 h-full">
-            <div className="h-full flex flex-col">
+        <div className="lg:pl-80 h-full flex">
+            <div className="h-full flex flex-col 2xl:basis-[70%] grow">
                 <Header conversation={conversation} />
                 <Body initialMessages={messages} currentUser={currentUser!} />
                 <Form />
             </div>
-
+            <div className="hidden border-l border-border w-fit px-4 2xl:flex grow">
+                <DrawerContent data={conversation} />
+            </div>
         </div>
     )
 }

@@ -9,6 +9,7 @@ import { useMemo } from "react";
 import ProfileDrawer from "./ProfileDrawer";
 import GroupAvatar from "@/app/components/GroupAvatar";
 import useActiveList from "@/hooks/useActiveList";
+import { FaPhoneAlt, FaVideo } from "react-icons/fa";
 
 type HeaderProps = {
     conversation: Conversation & {
@@ -43,9 +44,18 @@ export default function Header({ conversation }: HeaderProps) {
                     <span className="text-xs text-muted-foreground">{statusText}</span>
                 </section>
             </div>
-
-            <ProfileDrawer data={conversation} />
-
+            
+            <div className="flex items-center gap-6">
+                <Button variant="ghost" size={'icon'} className="text-sky-600 sm:text-2xl text-xl hover:text-sky-500" title="Start a voice call">
+                    <FaPhoneAlt />
+                </Button>
+                <Button variant="ghost" size={'icon'} className="text-sky-600 sm:text-2xl text-xl hover:text-sky-500" title="Start a video call">
+                    <FaVideo />
+                </Button>
+                <div className="2xl:hidden">
+                    <ProfileDrawer data={conversation} />
+                </div>
+            </div>
 
         </div>
     )

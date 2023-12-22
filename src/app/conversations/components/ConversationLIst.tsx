@@ -109,7 +109,7 @@ export default function ConversationLIst({ users, initialState }: Props) {
                 }
 
                 {
-                    (conversationsLoading || conversationSearching) && <LoadingUsers className="mt-2 px-4" />
+                    (conversationsLoading || conversationSearching) && <LoadingUsers className="mt-2 px-4 gap-8" />
                 }
             </div>
         </aside>

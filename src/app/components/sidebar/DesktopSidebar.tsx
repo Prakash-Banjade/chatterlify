@@ -38,17 +38,12 @@ export default function DesktopSidebar({ currentUser }: DesktopSidebarProps) {
                 </ul>
             </nav>
 
-            <nav className="flex flex-col justify-between items-center mt-4 pb-2 gap-4">
+            <nav className="flex items-center justify-center pb-8">
                 <ProfileDropDown>
                     <div className="cursor-pointer">
-                        <Avatar user={currentUser} activeStatus />
+                        <Avatar user={currentUser} activeStatus className="h-12 w-12" />
                     </div>
                 </ProfileDropDown>
-                <div className="">
-                    <Button variant="ghost" size="icon" asChild>
-                        <Link href="/settings"><GearIcon className="h-7 w-7" /></Link>
-                    </Button>
-                </div>
             </nav>
         </div>
     )

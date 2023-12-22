@@ -8,15 +8,23 @@ export async function POST(req: NextRequest) {
         const currentUser = await getCurrentUser();
         if (!currentUser?.id || !currentUser?.email) return new NextResponse('Unauthorized', { status: 401 })
 
-        const { name, image } = await req.json();
+        const data = await req.json();
 
         const updatedUser = await prisma.user.update({
             where: {
                 id: currentUser.id,
             },
-            data: {
-                name,
-                image,
+            data,
+            select: {
+                id: true,
+                name: true,
+                email: true,
+                image: true,
+                bio: true,
+                socialLinks: true,
+                createdAt: true,
+                updatedAt: true,
+                subscription: true,
             }
         })
 

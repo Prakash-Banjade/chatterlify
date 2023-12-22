@@ -69,7 +69,7 @@ export default function UsersList({ users, hasNextPage }: GetUsersProps) {
                 }
 
                 {
-                    (usersLoading || usersSearching) && <LoadingUsers className="mt-2 px-3 gap-6" />
+                    (usersLoading || usersSearching) && <LoadingUsers className="mt-2 px-3 gap-8" />
                 }
             </section>
         </>

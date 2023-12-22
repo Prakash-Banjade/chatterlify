@@ -83,7 +83,12 @@ export function ProfileForm({ currentUser }: Props) {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(data)
+                body: JSON.stringify({
+                    name: data.name,
+                    image: data.image,
+                    bio: data.bio,
+                    socialLinks: data.urls?.map(url => url.value) || []
+                })
             })
 
             if (!res.ok) throw new Error('Someting went wrong');

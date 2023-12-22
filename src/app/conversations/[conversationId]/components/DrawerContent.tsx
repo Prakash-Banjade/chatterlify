@@ -42,24 +42,30 @@ export default function DrawerContent({ data }: Props) {
             <div className="flex flex-col items-center">
                 <div className="mb-2">
                     {
-                        data?.isGroup ? <GroupAvatar users={data.users} /> : <Avatar user={otherUser} activeStatus />
+                        data?.isGroup ? <GroupAvatar users={data.users} /> : <Avatar user={otherUser} activeStatus className='w-12 h-12' />
                     }
                 </div>
                 <div className="flex items-center relative">
                     <span>{title}</span>
-                    <Button size="icon" variant={"ghost"} className='absolute -right-9'>
+                    {data.isGroup && <Button size="icon" variant={"ghost"} className='absolute -right-9'>
                         <Pencil2Icon className='text-muted-foreground' />
-                    </Button>
+                    </Button>}
                 </div>
                 <span className="text-xs text-muted-foreground">{statusText}</span>
 
-                <div className="mt-10 flex flex-col gap-2 items-center justify-center">
-                    <ConfirmModal />
-                    <span className="text-sm text-muted-foreground">Delete</span>
-                </div>
+                
             </div>
             <div className='mt-10 flex flex-col'>
-                <dl className="space-y-8 sm:space-y-6">
+                {
+                    !data.isGroup && (
+                        <>
+                            <div className=''>
+                                <p className='text-center text-sm'>{otherUser.bio}</p>
+                            </div>
+                        </>
+                    )
+                }
+                <dl className="space-y-8 sm:space-y-6 mt-12">
                     {
                         data.isGroup ? (
                             <>
@@ -85,15 +91,29 @@ export default function DrawerContent({ data }: Props) {
                                     <dt className="text-sm font-medium text-gray-500 sm:2-40 sm:flex-shrink-0">
                                         Email
                                     </dt>
-                                    <dd className='mt-1 tet-sm sm:col-span-2 break-words'>
+                                    <dd className='mt-1 text-sm sm:col-span-2 break-words'>
                                         {otherUser.email}
+                                    </dd>
+                                </div>
+                                <div>
+                                    <dt className="text-sm font-medium text-gray-500 sm:2-40 sm:flex-shrink-0">
+                                        I am available on
+                                    </dt>
+                                    <dd className='mt-1 text-sm sm:col-span-2 break-words'>
+                                        <div className='flex flex-col gap-3 text-sm'>
+                                            {
+                                                otherUser.socialLinks?.map((url, i) => (
+                                                    <a href={url} target='_blank' rel="noopener noreferrer" key={i}>{url}</a>
+                                                ))
+                                            }
+                                        </div>
                                     </dd>
                                 </div>
                                 <div>
                                     <dt className="text-sm font-medium text-gray-500 sm:2-40 sm:flex-shrink-0">
                                         Joined
                                     </dt>
-                                    <dd className='mt-1 tet-sm sm:col-span-2'>
+                                    <dd className='mt-1 text-sm sm:col-span-2'>
                                         <time dateTime={joinedDate}>
                                             {joinedDate}
                                         </time>
@@ -103,6 +123,10 @@ export default function DrawerContent({ data }: Props) {
                         )
                     }
                 </dl>
+            </div>
+            <div className="mt-10 flex flex-col gap-2 items-center justify-center">
+                    <ConfirmModal />
+                    <span className="text-sm text-muted-foreground">Delete</span>
             </div>
         </div>
     )

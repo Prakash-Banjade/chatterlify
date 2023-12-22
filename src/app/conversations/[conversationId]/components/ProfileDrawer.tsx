@@ -23,7 +23,7 @@ export default function ProfileDrawer({ data }: Props) {
     return (
         <Sheet>
             <SheetTrigger asChild>
-                <Button variant="ghost" size="icon" className="text-2xl">
+                <Button variant="ghost" size="icon" className="text-2xl text-sky-600 hover:text-sky-500">
                     <DotsHorizontalIcon />
                 </Button>
             </SheetTrigger>
