@@ -53,7 +53,7 @@ npm run dev
 ```bash
 APP_NAME=
 
-MONGO_URI=+
+MONGO_URI=
 
 NEXTAUTH_SECRET=
 GITHUB_CLIENT_ID=
