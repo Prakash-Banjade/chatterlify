@@ -20,7 +20,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Switch } from "@/components/ui/switch"
 import { toast } from "@/components/ui/use-toast"
 import { useEffect, useState } from "react"
-import { getCurrentPushSubscription, registerPushNotification, unregisterPushSubscription } from "@/notification/pushService"
+import { getCurrentPushSubscription, registerPushNotification, unregisterPushNotification } from "@/notification/pushService"
 
 const notificationsFormSchema = z.object({
   pushNotification: z.boolean(),
@@ -54,7 +54,7 @@ export function NotificationsForm() {
       if (enabled) {
         await registerPushNotification();
       } else {
-        await unregisterPushSubscription();
+        await unregisterPushNotification();
       }
       setNotificationEnabled(enabled);
     } catch (e) {

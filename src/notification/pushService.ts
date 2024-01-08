@@ -23,12 +23,13 @@ export async function registerPushNotification() {
     await sendPushSubscriptionToServer(subscription);
 }
 
-export async function unregisterPushSubscription() {
+export async function unregisterPushNotification() {
     const existingSubscription = await getCurrentPushSubscription();
 
     if (!existingSubscription) throw Error('No existing push subscription found');
 
-    await removePushSubscriptionFromServer(existingSubscription);
+    await removePushSubscriptionFromServer(existingSubscription); // remove from server
+    await existingSubscription.unsubscribe(); // unsubscribe the service worker
 }
 
 export async function sendPushSubscriptionToServer(subscription: PushSubscription) {

@@ -31,7 +31,7 @@ model User {
   accounts     Account[]
   messages     Message[]
   Reaction     Reaction[]
-  subscription Subscription[]
+  Subscription Subscription[]
 }
 
 model Account {

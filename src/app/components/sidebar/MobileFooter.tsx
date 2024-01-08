@@ -36,7 +36,7 @@ export default function MobileFooter({ currentUser }: MobileFooterProps) {
             }
             <ProfileDropDown>
                 <Button variant="ghost" className="rounded-none flex leading-6 text-sm gap-x-3 font-semibold w-full p-5 py-7">
-                    <Avatar user={currentUser} />
+                    <Avatar user={currentUser} className="h-6 w-6" />
                 </Button>
             </ProfileDropDown>
         </div>

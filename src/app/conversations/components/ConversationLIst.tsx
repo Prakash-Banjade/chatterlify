@@ -15,7 +15,6 @@ import useListenNewConversation from "@/hooks/useListenNewConversation";
 import useListenUpdateConversation from "@/hooks/useListenUpdateConversation";
 import ConversationSearchBox from "@/app/components/ConversationSearchBox";
 import useSetupServiceWorker from "@/hooks/useSetupServiceWorker";
-import { getReadyServiceWorker } from "@/lib/serviceWorker";
 
 type Props = {
     users: Partial<User>[],
@@ -33,7 +32,6 @@ export default function ConversationLIst({ users, initialState }: Props) {
 
     useListenNewConversation(); // listening conversation:new pusher event
     useListenUpdateConversation(); // listening conversation:update pusher event
-    useSetupServiceWorker(); // setup service worker
 
     const loadMore = async () => {
         setCurrentPage(prev => prev + 1);
@@ -81,7 +79,7 @@ export default function ConversationLIst({ users, initialState }: Props) {
                 </div>
 
                 <div className="px-4 mb-4">
-                    <ActiveUsers conversation={conversationState.conversations} />
+                    {/* <ActiveUsers conversation={conversationState.conversations} /> */}
                 </div>
 
                 {!conversationSearching && <div className="px-1.5">
@@ -109,7 +107,7 @@ export default function ConversationLIst({ users, initialState }: Props) {
                 }
 
                 {
-                    (conversationsLoading || conversationSearching) && <LoadingUsers className="mt-2 px-4 gap-8" />
+                    (conversationsLoading || conversationSearching) && <LoadingUsers className="mt-2 px-3 gap-8" />
                 }
             </div>
         </aside>

@@ -24,7 +24,7 @@ export default async function getCurrentUser() {
                 createdAt: true,
                 updatedAt: true,
                 hashedPassword: true,
-                subscription: true,
+                Subscription: true,
             }
         })
 

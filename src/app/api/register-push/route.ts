@@ -12,32 +12,44 @@ export async function POST(req: NextRequest) {
 
         if (!newSubscription) return NextResponse.json({ message: 'Missing push subscription in body' }, { status: 400 })
 
-        const userSubscriptions = currentUser.subscription || []
+        const isDuplicateEndpoint = currentUser.Subscription.some(
+            (sub) => sub.endpoint === newSubscription.endpoint
+        );
 
-        const updatedSubscriptions = userSubscriptions.filter(sub => sub.endpoint !== newSubscription.endpoint); // ensuring no duplicates
-
-        const newSubscriptionData = await prisma.subscription.create({
-            data: {
-                endpoint: newSubscription.endpoint,
-                userId: currentUser.id,
-            }
-        })
-
-        updatedSubscriptions.push(newSubscriptionData)
-
-        const updatedUser = await prisma.user.update({
-            where: {
-                id: currentUser.id
-            },
-            data: {
-                subscription: {
-                    disconnect: userSubscriptions.map(sub => ({ id: sub.id })),
-                    connect: updatedSubscriptions.map(sub => ({ id: sub.id })),
+        if (!isDuplicateEndpoint){
+            const newSubscriptionData = await prisma.subscription.create({
+                data: {
+                    endpoint: newSubscription.endpoint,
+                    userId: currentUser.id
                 }
-            }
-        })
+            })
 
-        return NextResponse.json({ message: 'push subscription saved' });
+            const updatedUser = await prisma.user.update({
+                where: {
+                    id: currentUser.id
+                },
+                data: {
+                    Subscription: {
+                        connect: newSubscriptionData
+                    }
+                },
+                select: {
+                    id: true,
+                    name: true,
+                    email: true,
+                    image: true,
+                    bio: true,
+                    socialLinks: true,
+                    createdAt: true,
+                    updatedAt: true,
+                    Subscription: true
+                }
+            })
+            return NextResponse.json({ message: 'push subscription saved', updatedUser });
+        }
+
+        return NextResponse.json({message: 'Duplicate endpoint, handled accordingly'})
+
 
 
     } catch (e) {
@@ -55,31 +67,24 @@ export async function DELETE(req: NextRequest) {
 
         if (!subscription) return NextResponse.json({ message: 'Missing push subscription in body' }, { status: 400 })
 
-        const existingSubscription = await prisma.subscription.findFirst({
-            where: {
-                userId: currentUser.id,
-                endpoint: subscription.endpoint
-            }
-        })
+        const existingSubscription = currentUser.Subscription.find(sub => sub.endpoint === subscription.endpoint)
+
+        if (!existingSubscription) return NextResponse.json({message: 'Invalid subscription remove request'}, {status: 400})
 
         const updatedUser = await prisma.user.update({
             where: {
                 id: currentUser.id
             },
             data: {
-                subscription: {
-                    update: {
-                        where: {
-                            id: existingSubscription?.id,
-                            endpoint: subscription.endpoint
-                        },
-                        data: {}
+                Subscription: {
+                    delete: {
+                        id: existingSubscription.id
                     }
                 }
             }
         })
 
-        return NextResponse.json({ message: 'push subscription deleted' });
+        return NextResponse.json({ message: 'push subscription deleted', updatedUser });
 
     } catch (e) {
         if (e instanceof Error) return new NextResponse(e.message, { status: 500 })

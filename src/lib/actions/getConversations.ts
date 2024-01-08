@@ -79,6 +79,7 @@ const getConversations = async (page: number = 1, limit: number = 10): Promise<G
             skip: skip,
             take: limit,
         });
+        console.log('conversations from server: ', conversations)
 
         const totalConversations = await prisma.conversation.count({
             where: {
