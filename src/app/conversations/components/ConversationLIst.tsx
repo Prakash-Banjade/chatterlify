@@ -1,12 +1,11 @@
 'use client'
 
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import useConversation from "@/hooks/useConversation";
 import clsx from "clsx";
 import ConversationBox from "./ConversationBox";
 import { User } from "@prisma/client";
 import GroupChatModal from "./GroupChatModal";
-import ActiveUsers from "./activeUsersDisplay/ActiveUsers";
 import { useCurrentConversations } from "@/context/ConversationsProvider";
 import { LoadingUsers } from "@/app/components/sidebar/UsersLoading";
 import { Button } from "@/components/ui/button";
@@ -14,7 +13,6 @@ import { GetConversationsProps } from "@/lib/actions/getConversations";
 import useListenNewConversation from "@/hooks/useListenNewConversation";
 import useListenUpdateConversation from "@/hooks/useListenUpdateConversation";
 import ConversationSearchBox from "@/app/components/ConversationSearchBox";
-import useSetupServiceWorker from "@/hooks/useSetupServiceWorker";
 
 type Props = {
     users: Partial<User>[],

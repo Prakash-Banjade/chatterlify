@@ -24,7 +24,6 @@ export async function POST(req: NextRequest) {
                 socialLinks: true,
                 createdAt: true,
                 updatedAt: true,
-                subscription: true,
             }
         })
 
