@@ -89,3 +89,6 @@ PUSHER_SECRET=
 4. We store the URL of this push subscription on our own server so we can use it later to trigger a push notification.
 5. These push notification work even if we don't have our website open. This is because push notifiation is sent to a `Service worker`. 
 6. Service worker is a backround process that we can create for our website and it will stay active even if our website is not active.
+
+## Inspired by a youtuber
+You can check the video [here](https://www.youtube.com/watch?v=PGPGcKBpAk8&t).
